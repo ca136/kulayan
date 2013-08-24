@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% block main %}
+
+        <div class="down">
+            <!--
+            <div class="leftBar">
+                <div class="down rightCurlLeftBar">
+                    <div class="leftCurlLeftBar">
+                        <div class="categoryLeft">
+                            <div class="down">
+                                <ul style="margin:0px; padding:0px; list-style:none;">
+        {% for category in categories %}
+                                    <li class="leftCat">
+                                        <a class="category-top" href="{{category.get_url}}">{{category.name}}</a>
+                                    </li>
+        {% endfor %}
+                                </ul>
+                            </div>
+
+                            <div class="down">
+                                &nbsp;
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <form action="" id="form1" method="post" name="form1" onsubmit="return validate_contact(this);">
+                    <div class="down bgDisAndOffers">
+                        <div class="dataDisAndOffersBox">
+                            <p>Email</p>
+                            <label><input class="inputEmailLeft" id="email"name="email" type="text" value=""></label>
+                            <div>
+                                <input alt="Join" height="28" src="/static/images/join_btn.jpg"type="image" width="60">
+                            </div>
+                        </div>
+                    </div>
+                    <input name="news" type="hidden" value="news">
+                </form>
+            </div>
+            -->
+
+            <!--
+            <div class="rightBar">
+            -->
+                <div class="listingContent">
+                    <!--<h1 id="allProductsDefaultHeading"></h1> -->
+
+                    <div>
+                        <div class="breadCrumb">
+                            <a href="/">Home</a>{% if category %} > <a>{{category}}</a>{% endif %}
+                        </div>
+                        <div class="viewAll">
+                            <a href="/shop/?view_all">View All</a>
+                        </div>
+                        <div class="pageNumbers">
+                            <div class="pagination" style="margin-left: 2em">
+                                <a class="active" href="?page=1" title=" Page 1 ">1</a>
+                                <a href="?page=2" title=" Page 2 ">2</a>
+                                <a href="?page=3" title=" Page 3 ">3</a>
+                                <a href="?page=4" title=" Page 4 ">4</a>
+                                <a href="?page=2" title=" Next Page ">&gt;&gt;</a>
+                            </div>
+                        </div>
+                        <div style="clear:both"></div>
+                    </div>
+
+                    <div class="navSplitPagesResult back" id="productsListingTopNumber" style="text-align:right;">
+                        Displaying <strong>1</strong> to <strong>8</strong> (of <strong>27</strong>products)
+                    </div>
+
+                    <div class="autoLeft">
+                        <div id="sorter" style=
+                        "float:left; width:180px;">
+                            <label for="disp-order-sorter">Sortby:</label>
+                            <select id="disp-order-sorter" name="disp_order">
+                                <option value="6">
+                                    New Designs
+                                </option>
+                                <option value="3">
+                                    Price
+                                </option>
+                            </select>
+                        </div>
+                        <div id="sorter" style="float:left; width:200px;">
+                            <select id="disp-order-size-sorter"name="disp_order_size" onchange="this.form.submit();">
+                                <option value="1">- Size -</option>
+                                <option value="1">Size - XS</option>
+                                <option value="2">Size - S</option>
+                                <option value="3">Size - M</option>
+                                <option value="4">Size - L</option>
+                                <option value="5">Size - XL</option>
+                            </select>
+                        </div>
+
+                        <div style="clear:both"></div>
+                    </div>
+
+                    <ul class="productListings">
+{% for product in products %}
+                        <li>
+                            <a href="{{product.get_url}}">
+                                <div class="product-listing"
+                                style="background-image: url({{product.thumbnail.all.0.image.url}});">
+                                </div>
+                                <h3 class="product-listing-name">{{product.name}}</h3>
+                                <div><strong>${{product.price}}</strong></div>
+                            </a>
+
+                            <div class="outerListcolors" style="text-align: center">
+    {% for color in product.colors.all %}
+                                <li>
+                                    <div class="listColors" style="background:{{color}};"></div>
+                                </li>
+    {% endfor %}
+                            </div>
+                        </li>
+{% endfor %}
+                    </ul>
+                </div>
+
+                <div class="listingCurlArrow">
+                    <a href="?page=next"><img src="/static/images/listing_curl_arrow.png"></a>
+                </div>
+            <!--
+            </div>
+            -->
+        </div>
+{% endblock main%}
