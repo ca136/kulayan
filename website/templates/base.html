@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html ng-app="mainApp">
 <head>
   <title>{{product.name}} - {{product.price}}</title>
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -8,7 +8,16 @@
   <link href="/static/css/style.css" rel="stylesheet" type="text/css">
   <link href='http://fonts.googleapis.com/css?family=Oxygen:400,300' rel='stylesheet' type='text/css'>
   <script src="/static/js/vendor/jquery.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+  <script>
+  var mainApp = angular.module('mainApp', []);
 
+mainApp.config(function($interpolateProvider) {
+  $interpolateProvider.startSymbol('((');
+  $interpolateProvider.endSymbol('))');
+});
+
+  </script>
   <style>
     .proDesRightBar {
       margin-top: 30px;
