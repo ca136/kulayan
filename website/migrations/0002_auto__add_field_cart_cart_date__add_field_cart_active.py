@@ -8,222 +8,23 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Category'
-        db.create_table(u'website_category', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=128)),
-            ('slug', self.gf('django.db.models.fields.CharField')(max_length=128, null=True, blank=True)),
-        ))
-        db.send_create_signal(u'website', ['Category'])
+        # Adding field 'Cart.cart_date'
+        db.add_column(u'website_cart', 'cart_date',
+                      self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, default=datetime.datetime(2013, 9, 25, 0, 0), blank=True),
+                      keep_default=False)
 
-        # Adding model 'SubCategory'
-        db.create_table(u'website_subcategory', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=128)),
-            ('category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['website.Category'])),
-        ))
-        db.send_create_signal(u'website', ['SubCategory'])
-
-        # Adding model 'ProductImage'
-        db.create_table(u'website_productimage', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('height', self.gf('django.db.models.fields.PositiveIntegerField')()),
-            ('width', self.gf('django.db.models.fields.PositiveIntegerField')()),
-            ('image', self.gf('django.db.models.fields.files.ImageField')(max_length=100, null=True, blank=True)),
-            ('product', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='images', null=True, to=orm['website.Product'])),
-            ('order', self.gf('django.db.models.fields.PositiveSmallIntegerField')(default=0)),
-        ))
-        db.send_create_signal(u'website', ['ProductImage'])
-
-        # Adding model 'Thumbnail'
-        db.create_table(u'website_thumbnail', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('image', self.gf('django.db.models.fields.files.ImageField')(max_length=100, null=True, blank=True)),
-            ('product', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='thumbnail', null=True, to=orm['website.Product'])),
-        ))
-        db.send_create_signal(u'website', ['Thumbnail'])
-
-        # Adding model 'Color'
-        db.create_table(u'website_color', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=30)),
-            ('code', self.gf('django.db.models.fields.CharField')(max_length=10)),
-        ))
-        db.send_create_signal(u'website', ['Color'])
-
-        # Adding model 'Product'
-        db.create_table(u'website_product', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=128)),
-            ('sku', self.gf('django.db.models.fields.CharField')(max_length=32)),
-            ('story', self.gf('django.db.models.fields.TextField')()),
-            ('details', self.gf('django.db.models.fields.TextField')()),
-            ('publish_date', self.gf('django.db.models.fields.DateField')()),
-            ('price', self.gf('django.db.models.fields.IntegerField')()),
-            ('sale_type', self.gf('django.db.models.fields.PositiveSmallIntegerField')(null=True, blank=True)),
-            ('sale_value', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('sale_end_date', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
-            ('category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['website.Category'])),
-            ('sub_category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['website.SubCategory'], null=True, blank=True)),
-        ))
-        db.send_create_signal(u'website', ['Product'])
-
-        # Adding model 'StockItem'
-        db.create_table(u'website_stockitem', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('size', self.gf('django.db.models.fields.PositiveSmallIntegerField')()),
-            ('stock', self.gf('django.db.models.fields.PositiveIntegerField')(default=0)),
-            ('product', self.gf('django.db.models.fields.related.ForeignKey')(related_name='stock_items', to=orm['website.Product'])),
-        ))
-        db.send_create_signal(u'website', ['StockItem'])
-
-        # Adding unique constraint on 'StockItem', fields ['product', 'size']
-        db.create_unique(u'website_stockitem', ['product_id', 'size'])
-
-        # Adding M2M table for field colors on 'StockItem'
-        db.create_table(u'website_stockitem_colors', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('stockitem', models.ForeignKey(orm[u'website.stockitem'], null=False)),
-            ('color', models.ForeignKey(orm[u'website.color'], null=False))
-        ))
-        db.create_unique(u'website_stockitem_colors', ['stockitem_id', 'color_id'])
-
-        # Adding model 'Cart'
-        db.create_table(u'website_cart', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], unique=True)),
-        ))
-        db.send_create_signal(u'website', ['Cart'])
-
-        # Adding model 'CartItem'
-        db.create_table(u'website_cartitem', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('stock_item', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['website.StockItem'])),
-            ('quantity', self.gf('django.db.models.fields.PositiveIntegerField')(default=1)),
-            ('price_per', self.gf('django.db.models.fields.DecimalField')(max_digits=8, decimal_places=2)),
-            ('cart', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['website.Cart'])),
-        ))
-        db.send_create_signal(u'website', ['CartItem'])
-
-        # Adding model 'Promo'
-        db.create_table(u'website_promo', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('code', self.gf('django.db.models.fields.CharField')(max_length=10)),
-            ('percent_off', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
-            ('flat_discount', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
-            ('available', self.gf('django.db.models.fields.BooleanField')(default=True)),
-        ))
-        db.send_create_signal(u'website', ['Promo'])
-
-        # Adding model 'Order'
-        db.create_table(u'website_order', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
-            ('order_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('order_number', self.gf('django.db.models.fields.CharField')(unique=True, max_length=32)),
-            ('status', self.gf('django.db.models.fields.PositiveSmallIntegerField')(default=0)),
-            ('salestax', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=8, decimal_places=2)),
-            ('promo', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['website.Promo'], null=True, blank=True)),
-            ('discount', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=8, decimal_places=2)),
-            ('total_price', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=8, decimal_places=2)),
-            ('instructions', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('shipping_name', self.gf('django.db.models.fields.CharField')(max_length=64)),
-            ('shipping_address', self.gf('django.db.models.fields.CharField')(max_length=128)),
-            ('shipping_city', self.gf('django.db.models.fields.CharField')(max_length=64)),
-            ('shipping_state', self.gf('django.db.models.fields.CharField')(max_length=20)),
-            ('shipping_country', self.gf('django.db.models.fields.CharField')(max_length=32)),
-            ('shipping_postal_code', self.gf('django.db.models.fields.CharField')(max_length=16)),
-            ('shipping_phone', self.gf('django.db.models.fields.CharField')(max_length=20)),
-        ))
-        db.send_create_signal(u'website', ['Order'])
-
-        # Adding model 'OrderItem'
-        db.create_table(u'website_orderitem', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=128)),
-            ('order', self.gf('django.db.models.fields.related.ForeignKey')(related_name='orderitems', to=orm['website.Order'])),
-            ('product', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['website.Product'], null=True, on_delete=models.SET_NULL, blank=True)),
-            ('status', self.gf('django.db.models.fields.PositiveSmallIntegerField')(default=0)),
-        ))
-        db.send_create_signal(u'website', ['OrderItem'])
-
-        # Adding model 'SalesTax'
-        db.create_table(u'website_salestax', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('city', self.gf('django.db.models.fields.CharField')(max_length=128)),
-            ('county', self.gf('django.db.models.fields.CharField')(max_length=128)),
-            ('ltr', self.gf('django.db.models.fields.DecimalField')(max_digits=4, decimal_places=2)),
-            ('gtr', self.gf('django.db.models.fields.DecimalField')(max_digits=4, decimal_places=2)),
-        ))
-        db.send_create_signal(u'website', ['SalesTax'])
-
-        # Adding model 'UserProfile'
-        db.create_table(u'website_userprofile', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.OneToOneField')(related_name='profile', unique=True, to=orm['auth.User'])),
-            ('optin', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('shipping_address', self.gf('django.db.models.fields.CharField')(max_length=128, null=True, blank=True)),
-            ('shipping_city', self.gf('django.db.models.fields.CharField')(max_length=64, null=True, blank=True)),
-            ('shipping_state', self.gf('django.db.models.fields.CharField')(max_length=20, null=True, blank=True)),
-            ('shipping_country', self.gf('django.db.models.fields.CharField')(max_length=32, null=True, blank=True)),
-            ('shipping_postal_code', self.gf('django.db.models.fields.CharField')(max_length=16, null=True, blank=True)),
-            ('shipping_phone', self.gf('django.db.models.fields.CharField')(max_length=20, null=True, blank=True)),
-            ('ref', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True, blank=True)),
-            ('ref_key', self.gf('django.db.models.fields.CharField')(max_length=6, null=True, blank=True)),
-            ('promo_code', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['website.Promo'], null=True, blank=True)),
-            ('referral_count', self.gf('django.db.models.fields.PositiveIntegerField')(default=0)),
-        ))
-        db.send_create_signal(u'website', ['UserProfile'])
+        # Adding field 'Cart.active'
+        db.add_column(u'website_cart', 'active',
+                      self.gf('django.db.models.fields.BooleanField')(default=True),
+                      keep_default=False)
 
 
     def backwards(self, orm):
-        # Removing unique constraint on 'StockItem', fields ['product', 'size']
-        db.delete_unique(u'website_stockitem', ['product_id', 'size'])
+        # Deleting field 'Cart.cart_date'
+        db.delete_column(u'website_cart', 'cart_date')
 
-        # Deleting model 'Category'
-        db.delete_table(u'website_category')
-
-        # Deleting model 'SubCategory'
-        db.delete_table(u'website_subcategory')
-
-        # Deleting model 'ProductImage'
-        db.delete_table(u'website_productimage')
-
-        # Deleting model 'Thumbnail'
-        db.delete_table(u'website_thumbnail')
-
-        # Deleting model 'Color'
-        db.delete_table(u'website_color')
-
-        # Deleting model 'Product'
-        db.delete_table(u'website_product')
-
-        # Deleting model 'StockItem'
-        db.delete_table(u'website_stockitem')
-
-        # Removing M2M table for field colors on 'StockItem'
-        db.delete_table('website_stockitem_colors')
-
-        # Deleting model 'Cart'
-        db.delete_table(u'website_cart')
-
-        # Deleting model 'CartItem'
-        db.delete_table(u'website_cartitem')
-
-        # Deleting model 'Promo'
-        db.delete_table(u'website_promo')
-
-        # Deleting model 'Order'
-        db.delete_table(u'website_order')
-
-        # Deleting model 'OrderItem'
-        db.delete_table(u'website_orderitem')
-
-        # Deleting model 'SalesTax'
-        db.delete_table(u'website_salestax')
-
-        # Deleting model 'UserProfile'
-        db.delete_table(u'website_userprofile')
+        # Deleting field 'Cart.active'
+        db.delete_column(u'website_cart', 'active')
 
 
     models = {
@@ -265,8 +66,10 @@ class Migration(SchemaMigration):
         },
         u'website.cart': {
             'Meta': {'object_name': 'Cart'},
+            'active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'cart_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']", 'unique': 'True'})
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'cart'", 'unique': 'True', 'to': u"orm['auth.User']"})
         },
         u'website.cartitem': {
             'Meta': {'object_name': 'CartItem'},

@@ -5,192 +5,193 @@
 {% endblock %}
 
 {% block main %}
-    <div class="down">
-        <div class="breadCrumb">
-          <a href="/shop/">Home</a> >
-          <a href="{{product.category.get_url}}">{{product.category}}</a> >
-          {{product.name}}
-        </div>
-
-      <form action="/cart/" id="cart_quantity" method="post" name="cart_quantity">
-
-        <div class="productImageContainer">
-          <div class="centeredContent back" id="productMainImage">
-            <a href="{{product.images.all.0.image.url}}" id="anchor-medium" rel="lightbox" title="Ruffled Fitted Jacket Blazer with High Collar and Princess Cut">
-              <img id="main-image" alt="{{product.name}}" title="{{product.name}}" src="{{product.images.all.0.image.url}}" width="380px" >
-            </a>
-          </div>
-          <div class="productOtherImages">
-{% for image in product.images.all %}
-            <img class="product-thumbnail" src="{{image.image.url}}" height="90" >
-{% endfor %}
-          </div>
-        </div>
-
-        <div class="productDescriptionContainer">
-          <div class="">
-
-
-            <div class="">
-
-              <div class="product-title">
-                <h1>{{product.name}}</h1>
-              </div>
-
-
-              <div class="">
-                <span id="productStory" class="active descTab">Description</span>
-                <span id="productDetails" class="descTab">Details</span>
-                <span class="price-container">${{product.price}}</span>
-              </div>
-
-              <div id="infoTab" class="descContainer active">
-                <div class="desDetailContent">
-                  <input type="text" ng-model="yourName" placeholder="Enter a name here">
-                  <hr>
-                  <h1>Hello {{yourName}}!</h1>
-                  {{product.story}}
-                </div>
-              </div>
-
-              <div id="detailsTab" class="descContainer">
-                <div class="desDetailContent">
-                  {{product.details}}
-                </div>
-              </div>
-
-              <div class="btmLCornProBox">
-                <div class="btmRCornProBox">
-                  <div class="contProGreyBox">
-
-                    <div class="brInfoDesBox">
-                        <a href="#" class="facebook-icon"></a>
-                        <a href="#" class="twitter-icon"></a>
-                        <a href="#" class="pinterest-icon"></a>
-                        <a href="#" class="tumblr-icon"></a>
-                    </div>
-
-                    <h3>Choose a color</h3>
-{% for color in product.colors %}
-                    <div class="color-option" style="background-color: {{color.code}}"></div>
-{% endfor %}
-
-                    <h3>Select your size</h3>
-{% for stock in product.stock_items.all %}
-                    <div class="size-option" data-size="">
-                      {{stock.get_size_value}}
-                    </div>
-{% endfor %}
-                    <div id="cart" style="display: block; text-align: right">
-                      <span id="add-to-cart" class="large-button">Add To Cart</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="greyCornerLeft1">
-                <div class="greyCornerRight1">
-                  <div class="autoLeft greyBoxIcons">
-                    <img border="0" src="/static/images/icons/charity_icon.jpg">
-                  </div>
-
-                  <div class="autoLeft">
-                    <a style="vertical-align:bottom;cursor:pointer;">Choose Your Charity</a>
-                  </div>
-                  <input id="chairity" type="hidden" value="">
-
-                  <div class="autoLeft greyBoxIcons">
-                    <a>
-                      <img height="20" src="/static/images/icons/free_shipping_icon.jpg" width="20">
-                    </a>
-                  </div>
-
-                  <div class="autoLeft">
-                    <a href="">Shipping</a>
-                  </div>
-                </div>
-              </div>
-
-              <div id="popupbox" class="modal">
-                <!--Start login box-->
-                <div id="pop_box">
-                  <div class="top_pop">
-                    <div class="bottom_pop">
-                      <p>Enter email address to be notified when we finish the next one</p>
-
-                      <div class="pop_left">
-                        <p>Email :</p>
-                      </div>
-
-                      <div class="pop_right">
-                        <input name="productId" type="hidden" value="{{product.id}}">
-                        <p>
-                          <input id="email" name="email" size="25">
-                        </p>
-
-                        <p>
-                          <input class="send" name="submit" type="button" value="Send">
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div id="popupbox1" class="modal">
-                <!--Start login box-->
-                <div id="pop_box">
-                  <input name="productId2" type="hidden" value="212">
-                    <p>Enter email address to be notified when we finish the next one</p>
-                    <div class="pop_left">
-                      <p>Your Name:</p>
-                      <p>Your Email:</p>
-                      <p>Friends Name:</p>
-                      <p>Friends Email :</p>
-                    </div>
-
-                    <div class="pop_right">
-                      <p><input id="yname" name="yname" size="25"></p>
-                      <p><input id="email2" name="email2" size="25"></p>
-                      <p><input id="fname" name="fname" size="25"></p>
-                      <p><input id="email3" name="email3" size="25"></p>
-
-                      <p><input class="send" name="submit" type="button" value="Send"></p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div id="popupbox2" class="modal">
-                <!--Start login box-->
-                <div id="pop_box">
-                  <div class="bottom_pop1">
-                    <p style="text-align:justify;">
-                      In addition to trying to be socially responsible through the fabrics we use,
-                      Seven Blooms has initiated the "Choose Your Charity" program. At the end of the
-                      check-out process, all customers will be able to choose a charity and we'll
-                      donate 5% of the profit on the purchase. With 5 charities available, we're
-                      hopeful that these small donations will lead to big changes in our community! Please
-                      <a style="color:#669933;" target="_blank">click here</a> if you'd like more
-                      information on our current charities. If you are interested in applying to be
-                      charity of the month, please contact us!
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-
-            </div>
-          </div>
-
-          <div style="clear:both;"></div>
-        </div>
-      </form>
+  <div class="down product-page" ng-controller="ProductCtrl">
+    <div class="breadCrumb">
+      <a href="/shop/">Home</a>
+      <a href="((product.category.url))">((product.category.name))</a>
+      ((product.name))
     </div>
 
-    {% endblock main %}
+    <form action="/cart/" id="cart_quantity" method="post" name="cart_quantity">
+
+    <div class="productImageContainer">
+      <div class="centeredContent back targetarea" id="productMainImage">
+<!--     <a href="((product.images.all.0.image.url}}" id="anchor-medium" rel="lightbox" title="Ruffled Fitted Jacket Blazer with High Collar and Princess Cut"> -->
+      <img id="main-image" alt="((product.name))" title="((product.name))" src="((product.images[0].url))" >
+<!--     </a>-->
+      </div>
+      <div class="main-image product-thumbnails thumbs productOtherImages" ng-repeat="image in product.images">
+        <a href="((image.url))" data-large="((image.url))" data-dims="380, auto">
+          <img class="product-thumbnail" src="((image.url))" height="90" >
+        </a>
+      </div>
+    </div>
+
+    <div class="productDescriptionContainer">
+      <div class="">
+
+
+      <div class="">
+
+        <div class="product-title">
+        <h1>((product.name))</h1>
+        </div>
+
+
+        <div class="">
+        <span id="productStory" class="active descTab">Description</span>
+        <span id="productDetails" class="descTab">Details</span>
+        <span class="price-container">$((product.price))</span>
+        </div>
+
+        <div id="infoTab" class="descContainer active">
+        <div class="desDetailContent">
+          <input type="text" ng-model="yourName" placeholder="Enter a name here">
+          <hr>
+          ((product.story))
+        </div>
+        </div>
+
+        <div id="detailsTab" class="descContainer">
+        <div class="desDetailContent">
+          ((product.details))
+        </div>
+        </div>
+
+        <div class="btmLCornProBox">
+        <div class="btmRCornProBox">
+          <div class="contProGreyBox">
+
+          <div class="brInfoDesBox">
+            <a href="#" class="facebook-icon"></a>
+            <a href="#" class="twitter-icon"></a>
+            <a href="#" class="pinterest-icon"></a>
+            <a href="#" class="tumblr-icon"></a>
+          </div>
+
+          <h3>Choose a color</h3>
+
+          <div ng-click="options.color = color.code" ng-repeat="color in product.colors" class="color-option" style="background-color: ((color.code))"></div>
+
+          <h3>Select your size</h3>
+            <div ng-click="options.size = stock.size_value" ng-repeat="stock in product.stock_items" class="size-option" data-size="">
+            ((stock.size_value))
+          </div>
+
+          <div id="cart" style="display: block; text-align: right">
+            <span ng-click="addToBag()" id="add-to-cart" class="large-button">Add To Cart</span>
+          </div>
+          </div>
+        </div>
+        </div>
+
+        <div class="greyCornerLeft1">
+        <div class="greyCornerRight1">
+          <div class="autoLeft greyBoxIcons">
+          <img border="0" src="/static/images/icons/charity_icon.jpg">
+          </div>
+
+          <div class="autoLeft">
+          <a style="vertical-align:bottom;cursor:pointer;">Choose Your Charity</a>
+          </div>
+          <input id="chairity" type="hidden" value="">
+
+          <div class="autoLeft greyBoxIcons">
+          <a>
+            <img height="20" src="/static/images/icons/free_shipping_icon.jpg" width="20">
+          </a>
+          </div>
+
+          <div class="autoLeft">
+          <a href="">Shipping</a>
+          </div>
+        </div>
+        </div>
+
+        <div id="popupbox" class="modal">
+        <!--Start login box-->
+        <div id="pop_box">
+          <div class="top_pop">
+          <div class="bottom_pop">
+            <p>Enter email address to be notified when we finish the next one</p>
+
+            <div class="pop_left">
+            <p>Email :</p>
+            </div>
+
+            <div class="pop_right">
+            <input name="productId" type="hidden" value="((product.id}}">
+            <p>
+              <input id="email" name="email" size="25">
+            </p>
+
+            <p>
+              <input class="send" name="submit" type="button" value="Send">
+            </p>
+            </div>
+          </div>
+          </div>
+        </div>
+        </div>
+
+        <div id="popupbox1" class="modal">
+        <!--Start login box-->
+        <div id="pop_box">
+          <input name="productId2" type="hidden" value="212">
+          <p>Enter email address to be notified when we finish the next one</p>
+          <div class="pop_left">
+            <p>Your Name:</p>
+            <p>Your Email:</p>
+            <p>Friends Name:</p>
+            <p>Friends Email :</p>
+          </div>
+
+          <div class="pop_right">
+            <p><input id="yname" name="yname" size="25"></p>
+            <p><input id="email2" name="email2" size="25"></p>
+            <p><input id="fname" name="fname" size="25"></p>
+            <p><input id="email3" name="email3" size="25"></p>
+
+            <p><input class="send" name="submit" type="button" value="Send"></p>
+          </div>
+          </div>
+        </div>
+        </div>
+
+        <div id="popupbox2" class="modal">
+        <!--Start login box-->
+        <div id="pop_box">
+          <div class="bottom_pop1">
+          <p style="text-align:justify;">
+            In addition to trying to be socially responsible through the fabrics we use,
+            Seven Blooms has initiated the "Choose Your Charity" program. At the end of the
+            check-out process, all customers will be able to choose a charity and we'll
+            donate 5% of the profit on the purchase. With 5 charities available, we're
+            hopeful that these small donations will lead to big changes in our community! Please
+            <a style="color:#669933;" target="_blank">click here</a> if you'd like more
+            information on our current charities. If you are interested in applying to be
+            charity of the month, please contact us!
+          </p>
+          </div>
+        </div>
+        </div>
+
+
+      </div>
+      </div>
+
+      <div style="clear:both;"></div>
+    </div>
+    </form>
+  </div>
+
+  {% endblock main %}
 
   {% block scripts %}
-    <script type="text/javascript" src="/static/js/vendor/multizoom.js"></script>
-    <script src="/static/js/pages/product.js"></script>
+  <script>
+    product = {{productJSON|safe|default:'{}'}};
+    bag = {{bag|safe|default:'{}'}};
+  </script>
+  <script type="text/javascript" src="/static/js/vendor/multizoom.js"></script>
+  <script src="/static/js/pages/product.js"></script>
   {% endblock %}

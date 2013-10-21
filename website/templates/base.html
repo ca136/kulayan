@@ -7,21 +7,20 @@
   <link href="{{product.get_url}}" rel="canonical">
   <link href="/static/css/style.css" rel="stylesheet" type="text/css">
   <link href='http://fonts.googleapis.com/css?family=Oxygen:400,300' rel='stylesheet' type='text/css'>
-  <script src="/static/js/vendor/jquery.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
   <script>
-  var mainApp = angular.module('mainApp', []);
+    var mainApp = angular.module('mainApp', []);
 
-mainApp.config(function($interpolateProvider) {
-  $interpolateProvider.startSymbol('((');
-  $interpolateProvider.endSymbol('))');
-});
-
+    mainApp.config(function($interpolateProvider) {
+      $interpolateProvider.startSymbol('((');
+      $interpolateProvider.endSymbol('))');
+    });
   </script>
   <style>
-    .proDesRightBar {
-      margin-top: 30px;
-    }
+  .proDesRightBar {
+    margin-top: 30px;
+  }
   </style>
   {% block head %}
   {% endblock %}
@@ -29,111 +28,91 @@ mainApp.config(function($interpolateProvider) {
 
 <body id="productinfoBody">
   <div class="container">
-    <div class="logo">
-      <a href="/">
-        <img src="/static/images/logo-graphic.png" width="320">
-        <span>Kulayan</span>
-        <!--
-          <img src="/static/images/7th-Bloom.jpg" alt="Seven Blooms" width="320" height="130" border="0">
-        -->
-      </a>
+  <div class="logo">
+    <a href="/">
+    <img src="/static/images/logo-graphic.png" width="320">
+    <span>Kulayan</span>
+    <!--
+      <img src="/static/images/7th-Bloom.jpg" alt="Seven Blooms" width="320" height="130" border="0">
+    -->
+    </a>
+  </div>
+  <div class="top-right-space">
+    <div class="top-utils">
+    <span class="shopping-cart">Cart ( ((bag.cart_items.length)) )</span>
+    <span class="cart-icon"></span>
     </div>
-    <div class="top-right-space">
-      <div class="top-utils">
-        <span class="shopping-cart">Cart (1)</span>
-        <span class="cart-icon"></span>
-      </div>
-      <div class="free-shipping">
-        FREE SHIPPING ON ORDERS OVER $100
-      </div>
+    <div class="free-shipping">
+    FREE SHIPPING ON ORDERS OVER $100
     </div>
-    <div class="main-nav-bg">
-      <div class="navigationSpaceHome">
-        <ul id="nav" class="navigation">
-          <li>
-            <a href="/shop/" class="">Clothes</a>
-            <ul>
+  </div>
+  <div class="main-nav-bg">
+    <div class="navigationSpaceHome">
+    <ul id="nav" class="navigation">
+      <li>
+      <a href="/shop/" class="">Clothes</a>
+      <ul>
   {% for category in categories %}
-              <li class="leftCat">
-                <a class="category-top" href="{{category.get_url}}">{{category.name}}</a>
-              </li>
+        <li class="leftCat">
+        <a class="category-top" href="{{category.get_url}}">{{category.name}}</a>
+        </li>
   {% endfor %}
-            </ul>
-          </li>
-          <li><a href="#" class="">Accessories</a></li>
-          <li><a href="/blog/" class="">Blog</a></li>
-          <li><a href="/about/" class="">About</a></li>
-        </ul>
-      </div>
+      </ul>
+      </li>
+      <li><a href="#" class="">Accessories</a></li>
+      <li><a href="/blog/" class="">Blog</a></li>
+      <li><a href="/about/" class="">About</a></li>
+    </ul>
     </div>
+  </div>
 {% block main %}
 {% endblock %}
 
-    <div class="btmDividingLine">
-      &nbsp;
+  <div class="btmDividingLine">
+    &nbsp;
+  </div>
+
+  <div class="footer-list">
+    <div class="company-list">
+      <div class="list-header">Company</div>
+      <div>About</div>
+      <div>Contact</div>
     </div>
 
-    <div class="down">
-      <div class="btmLeftBar">
-        <div class="down bgBtmThreeNav">
-          <ul class="BtmThreeNav">
-            <li>
-              <a href=
-              "/web/20130219175554/http://kulayan.com/index.php?main_page=page&amp;id=18">
-              Track Order</a>
-            </li>
+    <div class="service-list">
+      <div class="list-header">Services</div>
+      <div>FAQ</div>
+      <div>Refer a friend</div>
+    </div>
 
-            <li>
-              <a href=
-              "/web/20130219175554/http://kulayan.com/index.php?main_page=page&amp;id=17">
-              Composition and Fit</a>
-            </li>
-
-            <li>
-              <a href=
-              "/web/20130219175554/http://kulayan.com/index.php?main_page=page&amp;id=16">
-              Returns</a>
-            </li>
-          </ul>
-        </div>
-
-        <div class="down" style="text-align: center">
-          &nbsp;<a href=
-          "/web/20130219175554/http://kulayan.com/index.php?main_page=page&amp;id=20"><img alt="Free Shipping"
-          border="0" height="51" src=
-          "/static/images/free_shipping.jpg"
-          width="217"></a>
-        </div>
-      </div>
-
-      <div class="btmRightBar">
-        <div class="down bgWeHelpsEarth">
-          <div class="learnMoreBtn1">
-            &nbsp;<a href=
-            "/web/20130219175554/http://kulayan.com/index.php?main_page=page&amp;id=19"><img alt="Learn More"
-            border="0" height="25" src=
-            "/static/images/buttons/learn_more.jpg"
-            width="103"></a>
-          </div>
-        </div>
+    <div class="connect-section">
+      <div class="list-header">Connect</div>
+      <div class="social-icons">
+        FB, TW, etc.
       </div>
     </div>
 
-    <div class="down">
-      &nbsp;
+    <div class="signup-container">
+      Sign up here :)
+      <input type="text" placeholder="enter email" />
     </div>
+  </div>
 
-    <div class="down footer">
-      <div class="footerData">
-        <p>Copyright 2010 kulayan.com, All Right Reserved |
-        <a href="/web/20130219175554/http://kulayan.com/index.php?main_page=page&amp;id=21">
-        Privacy Policy</a></p>
+  <div class="down">
+    &nbsp;
+  </div>
 
-        <p>Support: 1-888-495-9699 | <a href=
-        "/web/20130219175554/http://kulayan.com/index.php?main_page=contact_us">
-        Contact us</a></p>
-      </div>
+  <div class="down footer">
+    <div class="footerData">
+    <p>Copyright 2010 kulayan.com, All Right Reserved |
+    <a href="/web/20130219175554/http://kulayan.com/index.php?main_page=page&amp;id=21">
+    Privacy Policy</a></p>
+
+    <p>Support: 1-888-495-9699 | <a href=
+    "/web/20130219175554/http://kulayan.com/index.php?main_page=contact_us">
+    Contact us</a></p>
     </div>
+  </div>
   </div>
 
   <div id="lbOverlay" style="display: none;"></div>
@@ -141,8 +120,8 @@ mainApp.config(function($interpolateProvider) {
   <div id="lbCenter" style="display: none;">
     <div id="lbImage">
       <div style="position: relative;">
-        <a href="#" id="lbPrevLink"></a> <a href="#" id=
-        "lbNextLink"></a>
+      <a href="#" id="lbPrevLink"></a> <a href="#" id=
+      "lbNextLink"></a>
       </div>
     </div>
   </div>
@@ -159,8 +138,12 @@ mainApp.config(function($interpolateProvider) {
     </div>
   </div>
 
+  <script>
+    bag = {{bag|safe|default:'{}'}};
+  </script>
+
   {% block scripts %}
-    <script src="/static/js/pages/product.js"></script>
+  <script src="/static/js/pages/product.js"></script>
   {% endblock %}
 </body>
 </html>
