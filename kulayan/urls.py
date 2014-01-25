@@ -16,6 +16,7 @@ urlpatterns = patterns('',
   url(r'^shop/(?P<category>[-\w]+)/$', 'website.views.shop'),
   url(r'^shop/$', 'website.views.shop'),
   url(r'^bag/$', 'website.views.bag'),
+  url(r'^checkout/$', 'website.views.checkout'),
   url(r'^about/$', TemplateView.as_view(template_name='about.html')),
 
   url(r'^product/(?P<product_id>\d+)/(?P<product_name>[-\w]+)/$', 'website.views.product'),

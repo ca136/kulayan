@@ -1,19 +1,19 @@
 /* ******************** NEW STYLES ******************** */
-body {
+/*body {
   font-family: Oxygen;
-}
+}*/
 
 .targetarea {
   height: 100% !important;
 }
 
-.main-nav-bg {
+/*.main-nav-bg {
   background-image: url('/static/images/green-watercolor.png');
   height: 80px;
   width: 1050px;
   background-size: 1050px 80px;
 }
-
+*/
 .descContainer.active {
   display: block;
 }
@@ -29,6 +29,8 @@ body {
 
 .productListings {
   clear: both;
+  padding: 0;
+  margin: 0;
 }
 
 .productListings li {
@@ -276,18 +278,17 @@ color: #F16666;
 }
 
 
-body {
+/*body {
   margin: 0 0 50px;
   text-align: center;
   font-family: Oxygen;
   font-size: 13px;
   color: #222;
-/*old color was 333*/
+old color was 333
   line-height: 18px;
   /*background: #E8F3E7; */
   /* background: #F7F8FA; */
   /*background: url(../images/bg.jpg);*/
-}
 
 p {
   margin: 0;
@@ -317,20 +318,20 @@ a:hover {
 }
 
 /*td,th{font-family:Oxygen; font-size:13px; color:#000000; line-height:18px; text-align:left;} */
-.container {
+/*.container {
   width: 1000px;
   margin: 10px auto;
   background-color: #fff;
   text-align: left;
-}
+}*/
 
 /*Header classes*/
-.logo {
+/*.logo {
   width: 300px;
   display: inline-block;
-}
+}*/
 
-.logo a {
+/*.logo a {
   font-size: 54px;
   margin: 15px 0;
   height: 80px;
@@ -339,14 +340,14 @@ a:hover {
   width: 600px;
   vertical-align: middle;
   color: #444;
-}
+}*/
 
-.logo a:hover {
+/*.logo a:hover {
   color: #444;
   text-decoration: none;
-}
+}*/
 
-.logo img {
+/*.logo img {
   height: 80px;
   width: auto;
   vertical-align: middle;
@@ -358,9 +359,9 @@ a:hover {
   text-align: right;
   margin-top: 25px;
   float: right;
-}
+}*/
 
-.top-right-space a {
+/*.top-right-space a {
   color: #000;
   text-decoration: none;
 }
@@ -369,7 +370,7 @@ a:hover {
   color: #1e5f21;
   text-decoration: none;
 }
-
+*/
 .topIcons {
   width: auto;
   float: right;
@@ -1401,42 +1402,6 @@ li.leftCat2 a:hover {
   text-align: right;
   width: 180px;
   float: right;
-}
-
-.facebook-icon,
-.twitter-icon,
-.pinterest-icon,
-.tumblr-icon {
-  height: 35px;
-  width: 35px;
-  display: inline-block;
-  background-position: 50%;
-}
-
-.facebook-icon {
-  background-image: url(/static/images/icons/facebook.png);
-}
-.twitter-icon {
-  background-image: url(/static/images/icons/twitter.png);
-}
-.pinterest-icon {
-  background-image: url(/static/images/icons/pinterest.png);
-}
-.tumblr-icon {
-  background-image: url(/static/images/icons/tumblr.png);
-}
-
-.facebook-icon:hover {
-  background-image: url(/static/images/icons/facebook-active.png);
-}
-.twitter-icon:hover {
-  background-image: url(/static/images/icons/twitter-active.png);
-}
-.pinterest-icon:hover {
-  background-image: url(/static/images/icons/pinterest-active.png);
-}
-.tumblr-icon:hover {
-  background-image: url(/static/images/icons/tumblr-active.png);
 }
 
 .color-option, .size-option {

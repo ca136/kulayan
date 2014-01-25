@@ -1,49 +1,37 @@
+
 {% extends "base.html" %}
-
 {% block main %}
-  <div class="down product-page" ng-controller="ProductCtrl">
-    <div class="breadCrumb">
-      <a href="/shop/">Home</a>
-      <a href="((product.category.url))">((product.category.name))</a>
-      ((product.name))
-    </div>
-  </div>
-
-  <div class="about-left">
-    <img src="http://placehold.it/350x150" />
-    <div>
-      Look Good | Feel Good | Do Good
-    </div>
-  </div>
-
-  <div class="about-right">
-    <p class="text">Kulayan is colorful, fun and environmentally
-      conscious. We offer fashionable organic
-      women’s clothing, as well as an array of other
-      limited edition independent designs. As we
-      grow, we hope to include other independent
-      and local designers, and add other categories
-      such as accessories and home goods.
-    </p>
-    <p class="text">
-      If you’d like to apply to sell on Kulayan, please
-      email: info@kulayan.com
-    </p>
-    <p class="text">
-      Every month Kulayan donates 5% of profits to
-      a selected charity. If you are an organization
-      interested in learning more about fundraising
-      opportunities, please email: info@kulayan.com
-    </p>
-  </div>
-
-  {% endblock main %}
-
-  {% block scripts %}
-  <script>
-    product = {{productJSON|safe|default:'{}'}};
-    bag = {{bag|safe|default:'{}'}};
-  </script>
-  <script type="text/javascript" src="/static/js/vendor/multizoom.js"></script>
-  <script src="/static/js/pages/product.js"></script>
-  {% endblock %}
+<div ng-controller="ProductCtrl" class="down product-page">
+  <div class="breadCrumb"><a href="/shop/">Home</a><a href="((product.category.url))">((product.category.name))</a>((product.name))</div>
+</div>
+<div class="about-left"><img src="http://placehold.it/350x150"/>
+  <div>Look Good | Feel Good | Do Good</div>
+</div>
+<div class="about-right">
+  <p class="text">
+    Kulayan is colorful, fun and environmentally
+    conscious. We offer fashionable organic
+    women’s clothing, as well as an array of other
+    limited edition independent designs. As we
+    grow, we hope to include other independent
+    and local designers, and add other categories
+    such as accessories and home goods.
+  </p>
+  <p class="text">
+    If you’d like to apply to sell on Kulayan, please
+    email: info@kulayan.com
+  </p>
+  <p class="text">
+    Every month Kulayan donates 5% of profits to
+    a selected charity. If you are an organization
+    interested in learning more about fundraising
+    opportunities, please email: info@kulayan.com
+  </p>
+</div>{% endblock main %}
+{% block scripts %}
+<script>
+  product = {{productJSON|safe|default:'{}'}};
+  bag = {{bag|safe|default:'{}'}};
+</script>
+<script type="text/javascript" src="/static/js/vendor/multizoom.js"></script>
+<script src="/static/js/pages/product.js">| {% endblock %}</script>

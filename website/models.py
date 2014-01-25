@@ -30,8 +30,8 @@ class SubCategory(models.Model):
 
 
 class ProductImage(models.Model):
-  height = models.PositiveIntegerField()
-  width = models.PositiveIntegerField()
+  height = models.PositiveIntegerField(blank=True, null=True)
+  width = models.PositiveIntegerField(blank=True, null=True)
   image = models.ImageField(upload_to=lambda i, fn: 'images/products/%s' % (fn), \
     height_field='height', width_field='width', blank=True, null=True)
   product = models.ForeignKey('Product', related_name='images', blank=True, null=True)
@@ -86,7 +86,7 @@ class Product(models.Model):
   sub_category = models.ForeignKey(SubCategory, null=True, blank=True)
 
   def __unicode__(self):
-    return self.name
+    return unicode(self.name)
 
   def get_url(self):
     return '/product/{0}/{1}/'.format(self.id, slugify(self.name))
@@ -103,10 +103,15 @@ class Product(models.Model):
       'sku': self.name,
       'story': self.story,
       'details': self.details,
+      'url': self.get_url(),
       'publish_date': self.publish_date.isoformat(),
       'price': self.price,
       'sale_value': self.sale_value,
-      'images': [ image.get_json() for image in self.images.all() ],
+      'images': [ {
+        'url': image.get_json()['url'],
+        'height': image.height,
+        'width': image.width
+      } for image in self.images.all() ],
       'stock_items': [ stock_item.get_json() for stock_item in self.stock_items.all() ],
       'colors': [ color.get_json() for color in colors ]
     }

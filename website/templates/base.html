@@ -1,151 +1,232 @@
-<!doctype html>
-<html ng-app="mainApp">
+<!DOCTYPE html>
+<html ng-app="app"></html>
 <head>
   <title>{{product.name}} - {{product.price}}</title>
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-  <meta content="Seven Blooms Ruffled Fitted Jacket Blazer with High Collar and Princess Cut - This jacket is constructed with dozens of pattern pieces, and is completely lined! Wear it on casual days or as a more formal blazer for work. Only the best fabrics are used for this piece: an outer consisting of a textured linen, and a lining made of soft cotton voile." name="description">
+  <meta content="" name="description">
   <link href="{{product.get_url}}" rel="canonical">
   <link href="/static/css/style.css" rel="stylesheet" type="text/css">
-  <link href='http://fonts.googleapis.com/css?family=Oxygen:400,300' rel='stylesheet' type='text/css'>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
-  <script>
-    var mainApp = angular.module('mainApp', []);
+  <link href="/static/css/main.css" rel="stylesheet" type="text/css">
+  <link href="/static/css/vendor/normalize.css" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=Oxygen:400,300" rel="stylesheet" type="text/css">
 
-    mainApp.config(function($interpolateProvider) {
-      $interpolateProvider.startSymbol('((');
-      $interpolateProvider.endSymbol('))');
-    });
-  </script>
-  <style>
-  .proDesRightBar {
-    margin-top: 30px;
-  }
-  </style>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.js"></script>
+  <script src="/static/js/vendor/angular-local-storage.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular-cookies.js"></script>
+
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+
   {% block head %}
   {% endblock %}
 </head>
-
-<body id="productinfoBody">
+<body ng-controller="MainCtrl">
   <div class="container">
-  <div class="logo">
-    <a href="/">
-    <img src="/static/images/logo-graphic.png" width="320">
-    <span>Kulayan</span>
-    <!--
-      <img src="/static/images/7th-Bloom.jpg" alt="Seven Blooms" width="320" height="130" border="0">
-    -->
-    </a>
-  </div>
-  <div class="top-right-space">
-    <div class="top-utils">
-    <span class="shopping-cart">Cart ( ((bag.cart_items.length)) )</span>
-    <span class="cart-icon"></span>
+    <div class="logo-container"><a href="/"><img src="/static/images/logo-graphic.png" class="logo-img">
+        <h1 class="header">Kulayan</h1></a></div>
+    <div class="top-right-space">
+      <div class="top-utils">
+        <span class="shopping-cart" ng-click="openCart()">
+          Cart ( ((mainData.cartItems.length)) )
+        </span>
+        <span class="cart-icon"></span>
+      </div>
+      <div class="free-shipping">FREE SHIPPING ON ORDERS OVER $100</div>
     </div>
-    <div class="free-shipping">
-    FREE SHIPPING ON ORDERS OVER $100
-    </div>
-  </div>
-  <div class="main-nav-bg">
-    <div class="navigationSpaceHome">
-    <ul id="nav" class="navigation">
-      <li>
-      <a href="/shop/" class="">Clothes</a>
-      <ul>
-  {% for category in categories %}
-        <li class="leftCat">
-        <a class="category-top" href="{{category.get_url}}">{{category.name}}</a>
-        </li>
-  {% endfor %}
-      </ul>
-      </li>
-      <li><a href="#" class="">Accessories</a></li>
-      <li><a href="/blog/" class="">Blog</a></li>
-      <li><a href="/about/" class="">About</a></li>
-    </ul>
-    </div>
-  </div>
-{% block main %}
-{% endblock %}
-
-  <div class="btmDividingLine">
-    &nbsp;
-  </div>
-
-  <div class="footer-list">
-    <div class="company-list">
-      <div class="list-header">Company</div>
-      <div>About</div>
-      <div>Contact</div>
-    </div>
-
-    <div class="service-list">
-      <div class="list-header">Services</div>
-      <div>FAQ</div>
-      <div>Refer a friend</div>
-    </div>
-
-    <div class="connect-section">
-      <div class="list-header">Connect</div>
-      <div class="social-icons">
-        FB, TW, etc.
+    <div class="main-nav-bar">
+      <div class="nav-inner-container">
+        <ul class="nav-list">
+          <li class="nav-item"><a href="/shop/" class="nav-link">Clothes</a>
+            <ul class="nav-sub-list">{% for category in categories %}
+              <li class="nav-sub-list-item"><a href="{{category.get_url}}" class="nav-sub-list-link">{{category.name}}</a></li>{% endfor %}
+            </ul>
+          </li>
+          <li class="nav-item"><a href="#" class="nav-link">Accessories</a></li>
+          <li class="nav-item"><a href="/blog/" class="nav-link">Blog</a></li>
+          <li class="nav-item"><a href="/about/" class="nav-link">About</a></li>
+        </ul>
+      </div>
+    </div>{% block main %}
+    {% endblock %}
+    <div class="footer-dividing-line"></div>
+    <div class="footer-list">
+      <div class="company-list">
+        <h3 class="footer-header">Company</h3>
+        <div class="footer-item">About</div>
+        <div class="footer-item">Contact</div>
+      </div>
+      <div class="service-list">
+        <h3 class="footer-header">Services</h3>
+        <div class="footer-item">FAQ</div>
+        <div class="footer-item">Refer a friend</div>
+      </div>
+      <div class="connect-section">
+        <h3 class="footer-header">Connect</h3>
+        <div class="social-icons">FB, TW, etc.</div>
+      </div>
+      <div class="signup-container">
+        <h3 class="footer-header">Sign up for a special gift</h3>
+        <input type="text" placeholder="enter email">
       </div>
     </div>
-
-    <div class="signup-container">
-      Sign up here :)
-      <input type="text" placeholder="enter email" />
-    </div>
-  </div>
-
-  <div class="down">
-    &nbsp;
-  </div>
-
-  <div class="down footer">
-    <div class="footerData">
-    <p>Copyright 2010 kulayan.com, All Right Reserved |
-    <a href="/web/20130219175554/http://kulayan.com/index.php?main_page=page&amp;id=21">
-    Privacy Policy</a></p>
-
-    <p>Support: 1-888-495-9699 | <a href=
-    "/web/20130219175554/http://kulayan.com/index.php?main_page=contact_us">
-    Contact us</a></p>
-    </div>
-  </div>
-  </div>
-
-  <div id="lbOverlay" style="display: none;"></div>
-
-  <div id="lbCenter" style="display: none;">
-    <div id="lbImage">
-      <div style="position: relative;">
-      <a href="#" id="lbPrevLink"></a> <a href="#" id=
-      "lbNextLink"></a>
+    <div class="copyright-container">
+      <div class="copyright-inner">
+        <p>Copyright 2013 Kulayan.com, All Right Reserved |<a href="/privacy">Privacy Policy</a></p>
+        <p><a href="/contact">Contact us</a></p>
       </div>
     </div>
   </div>
+  <div ng-controller="CartCtrl" class="cart-modal-container" ng-class="{active: mainData.cartOpen}">
+    <div class="cart-outer-container" ng-click="closeCart()">
+      <div class="cart-inner-container" ng-click="stopProp($event)" ng-class="{slide: mainData.checkoutActive }">
+        <div class="cart-header">Your Cart</div>
+        <div class="cart-subheaders">
+          <span class="subheader-item">Item</span>
+          <span class="subheader-quantity">Quantity</span>
+          <span class="subheader-price">Price</span>
+        </div>
+        <div ng-repeat="item in cartData.cartItems" class="cart-item">
+          <div class="cart-thumbnail" style="background-image: url( ((item.thumbnail)) );"></div>
+          <div class="cart-item-details">
+            <div class="cart-item-title">((item.name))</div>
+            <div class="cart-item-options">
+              <span>
+                <span>Color:</span>
+                <div class="cart-color-box" style="background: ((item.color));"></div>
+              </span>
+              <span>| Size: ((item.size))</span>
+            </div>
+          </div>
+          <div class="cart-item-quantity">((item.quantity))</div>
+          <div class="cart-item-price">$((item.price))</div>
+          <div class="cart-remove-item" ng-click="removeItem(item)"></div>
+        </div>
 
-  <div id="lbBottomContainer" style="display: none;">
-    <div id="lbBottom">
-      <a href="#" id="lbCloseLink"></a>
+        <div class="cart-subtotal">
+          Subtotal: <span class="total-price">$(( getSubTotal(cartData.cartItems) ))</span>
+        </div>
+        <div class="cart-shipping">
+          Shipping: <span class="total-price">$(( getShipping(cartData.cartItems) ))</span>
+        </div>
+        <div class="cart-total">
+          Total: <span class="total-price">$(( getSubTotal(cartData.cartItems) + getShipping(cartData.cartItems) ))</span>
+        </div>
 
-      <div id="lbCaption"></div>
+        <div class="checkout-button" ng-click="clickCheckout()">
+          Checkout &#10140;
+        </div>
 
-      <div id="lbNumber"></div>
+      </div>
+      <div class="checkout-inner-container" ng-click="stopProp($event)" ng-class="{slide: mainData.checkoutActive }">
+        <div class="cart-header">Checkout</div>
+        <div class="left-panel">
+          <form class="shipping-form">
+            <div class="form-title">Shipping Information</div>
 
-      <div style="clear: both;"></div>
+
+            <select name="shipping_country" ng-model="checkoutData.country" ng-options="c.name group by c.other for c in staticData.countries">
+            </select>
+
+            <div class="field-container">
+              <label for="street">Street address</label>
+              <input type="text" name="street" ng-model="checkoutData.street" ng-required="true">
+            </div>
+            <div class="field-container">
+              <label for="apt">Apt/Suite/Other</label>
+              <input type="text" name="apt" ng-model="checkoutData.apt">
+            </div>
+            <div class="field-container">
+              <label for="city">City</label>
+              <input type="text" name="city" ng-model="checkoutData.city" ng-required="true">
+            </div>
+            <div class="field-container">
+              <label for="state">State</label>
+              <input type="text" name="state" ng-model="checkoutData.state" ng-required="true">
+            </div>
+            <div class="field-container">
+              <label for="postal">Postal Code</label>
+              <input type="text" name="postal" ng-model="checkoutData.postal" ng-required="true">
+            </div>
+          </form>
+        </div>
+        <div class="right-panel">
+
+          <form method="POST" id="payment-form" name="paymentForm" class="payment-form">
+            <div class="form-title">Payment Information</div>
+            <span class="payment-errors"></span>
+
+            <div class="field-container">
+              <label>Card Number</label>
+              <input type="text" size="20" data-stripe="number"
+                ng-model="checkoutData.cc"
+                ng-required="true"
+                ng-minlength="15"
+                ng-maxlength="16"
+                ng-pattern="/^\d+$/" />
+            </div>
+            <div class="field-container">
+              <label>CVC</label>
+              <input type="text" size="4" data-stripe="cvc"
+                ng-model="checkoutData.cvc"
+                ng-required="true"
+                ng-minlength="3"
+                ng-maxlength="4"
+                ng-pattern="/^\d+$/" />
+            </div>
+            <div class="field-container">
+              <label>Exp. (MM/YYYY)</label>
+              <input type="text" size="2" data-stripe="exp-month"
+                ng-model="checkoutData.expM"
+                ng-required="true"
+                ng-minlength="2"
+                ng-maxlength="2"
+                ng-pattern="/^\d+$/" />
+              <span> / </span>
+              <input type="text" size="4" data-stripe="exp-year"
+                ng-model="checkoutData.expY"
+                ng-required="true"
+                ng-minlength="4"
+                ng-maxlength="4"
+                ng-pattern="/^\d+$/" />
+            </div>
+            <div class="field-container">
+              <label>Promo Code</label>
+              <input type="text" size="6" ng-model="checkoutData.promo"/>
+            </div>
+
+          </form>
+        </div>
+        <div class="form-title">Order Summary</div>
+        <div class="cart-subtotal">
+          Subtotal: <span class="total-price">$(( getSubTotal(cartData.cartItems) ))</span>
+        </div>
+        <div class="cart-shipping">
+          Shipping: <span class="total-price">$(( getShipping(cartData.cartItems) ))</span>
+        </div>
+        <div class="cart-shipping">
+          Tax: $<span ng-bind="checkoutData.salesTax">0</span>
+        </div>
+        <div class="cart-total">
+          Total: <span class="total-price">$(( getSubTotal(cartData.cartItems) + getShipping(cartData.cartItems) ))</span>
+        </div>
+        <div class="checkout-button" ng-click="submitPayment(checkoutData)">Submit Payment &#10140;</div>
+
+        <div ng-click="backToCart()" style="margin-top 60px;">BACK TO CART</div>
+
+      </div>
     </div>
   </div>
+  <script>bag = {{bag|safe|default:'{}'}};</script>
 
-  <script>
-    bag = {{bag|safe|default:'{}'}};
-  </script>
+  <script src="/static/js/app.js"></script>
+  <script src="/static/js/services/cart.js"></script>
+  <script src="/static/js/controllers/main.js"></script>
+  <script src="/static/js/controllers/cart.js"></script>
+
+  <script src="https://js.stripe.com/v2/"></script>
 
   {% block scripts %}
-  <script src="/static/js/pages/product.js"></script>
+    <script src="/static/js/controllers/product.js"></script>
   {% endblock %}
 </body>
-</html>
-
-

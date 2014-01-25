@@ -5,7 +5,13 @@ from website.models import Product, Category, Cart
 from django.contrib.auth.models import User
 from datetime import datetime
 import json
+import stripe
 from django.conf import settings
+from django.core.paginator import Paginator
+
+from django.http import HttpResponse, HttpResponseRedirect
+
+from utils import generate_user_hash
 
 def login(request):
   return ""
@@ -39,7 +45,7 @@ def product(request, product_id, product_name):
   try:
     user = User.objects.get(profile__session=session_key)
   except User.DoesNotExist:
-    user = User()
+    user = User(username=generate_user_hash())
     user.save()
     user.profile.session = session_key
     user.profile.save()
@@ -66,14 +72,32 @@ def product(request, product_id, product_name):
 def shop(request, category=""):
   template_data = {}
   template_data['categories'] = Category.objects.all()
-  category_instance = ''
-  if category:
-    category_instance = Category.objects.get(slug__iexact=category)
-    products = Product.objects.filter(category=category_instance)
-  else:
-    products = Product.objects.filter(publish_date__lte=datetime.now())
-  template_data['products'] = products
-  template_data['category'] = category_instance
+
+  template_data['products'] = [ json.dumps(product.get_json()) for product in \
+    Product.objects.filter(publish_date__lte=datetime.now()) ]
+
+  # REMOVING PAGINATION ON BACKEND AND SENDING ALL
+  # PRODUCT DATA FOR THE FRONTEND TO DEAL WITH
+
+  # category_instance = ''
+  # if category:
+  #   category_instance = Category.objects.get(slug__iexact=category)
+  #   products = Product.objects.filter(category=category_instance)
+  # else:
+  #   products = Product.objects.filter(publish_date__lte=datetime.now())
+
+  # paginator = Paginator(products, 20)
+  # page_number = request.GET.get('page', 1)
+  # page = paginator.page(page_number)
+  # try:
+  #   page_objects = page.object_list
+  # except:
+  #   return HttpResponseBadRequest(mimetype="json")
+
+  # print 'PAGE NUMBER', page_number
+  # template_data['page'] = page
+  # template_data['products'] = page_objects
+  # template_data['category'] = category_instance
   return render(request, 'products.html', template_data)
 
 
@@ -100,7 +124,19 @@ def bag(request):
   return render(request, 'bag.html', template_data)
 
 def checkout(request):
-  return ""
+  if request.method == u'POST':
+    stripe.api_key = "sk_test_AEdHaIntz1aeKwSLHsN8ENpZ"
+    data = json.loads(request.body)
+
+    response = stripe.Charge.create(
+      amount = data['total'] + data['salesTax'],
+      currency = 'usd',
+      card = data['token'], # obtained with Stripe.js
+      description = 'Charge for test@example.com'
+    )
+
+    data = json.dumps(response)
+    return HttpResponse(data, mimetype='application/json')
 
 def confirmation(request):
   return ""
