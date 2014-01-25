@@ -12,6 +12,7 @@ class Migration(SchemaMigration):
         db.create_table(u'website_category', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=128)),
+            ('slug', self.gf('django.db.models.fields.CharField')(max_length=128, null=True, blank=True)),
         ))
         db.send_create_signal(u'website', ['Category'])
 
@@ -23,16 +24,14 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'website', ['SubCategory'])
 
-        # Adding model 'Image'
-        db.create_table(u'website_image', (
+        # Adding model 'ProductImage'
+        db.create_table(u'website_productimage', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('image', self.gf('django.db.models.fields.files.ImageField')(max_length=100, null=True, blank=True)),
             ('product', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='images', null=True, to=orm['website.Product'])),
             ('order', self.gf('django.db.models.fields.PositiveSmallIntegerField')(default=0)),
-            ('width', self.gf('django.db.models.fields.PositiveIntegerField')(default=0)),
-            ('height', self.gf('django.db.models.fields.PositiveIntegerField')(default=0)),
         ))
-        db.send_create_signal(u'website', ['Image'])
+        db.send_create_signal(u'website', ['ProductImage'])
 
         # Adding model 'Thumbnail'
         db.create_table(u'website_thumbnail', (
@@ -42,6 +41,14 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'website', ['Thumbnail'])
 
+        # Adding model 'Color'
+        db.create_table(u'website_color', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=30)),
+            ('code', self.gf('django.db.models.fields.CharField')(max_length=10)),
+        ))
+        db.send_create_signal(u'website', ['Color'])
+
         # Adding model 'Product'
         db.create_table(u'website_product', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -49,11 +56,11 @@ class Migration(SchemaMigration):
             ('sku', self.gf('django.db.models.fields.CharField')(max_length=32)),
             ('story', self.gf('django.db.models.fields.TextField')()),
             ('details', self.gf('django.db.models.fields.TextField')()),
-            ('publish_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('publish_date', self.gf('django.db.models.fields.DateField')()),
             ('price', self.gf('django.db.models.fields.IntegerField')()),
             ('sale_type', self.gf('django.db.models.fields.PositiveSmallIntegerField')(null=True, blank=True)),
             ('sale_value', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('sale_end_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
+            ('sale_end_date', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
             ('category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['website.Category'])),
             ('sub_category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['website.SubCategory'], null=True, blank=True)),
         ))
@@ -64,12 +71,20 @@ class Migration(SchemaMigration):
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('size', self.gf('django.db.models.fields.PositiveSmallIntegerField')()),
             ('stock', self.gf('django.db.models.fields.PositiveIntegerField')(default=0)),
-            ('product', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['website.Product'])),
+            ('product', self.gf('django.db.models.fields.related.ForeignKey')(related_name='stock_items', to=orm['website.Product'])),
         ))
         db.send_create_signal(u'website', ['StockItem'])
 
         # Adding unique constraint on 'StockItem', fields ['product', 'size']
         db.create_unique(u'website_stockitem', ['product_id', 'size'])
+
+        # Adding M2M table for field colors on 'StockItem'
+        db.create_table(u'website_stockitem_colors', (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('stockitem', models.ForeignKey(orm[u'website.stockitem'], null=False)),
+            ('color', models.ForeignKey(orm[u'website.color'], null=False))
+        ))
+        db.create_unique(u'website_stockitem_colors', ['stockitem_id', 'color_id'])
 
         # Adding model 'Cart'
         db.create_table(u'website_cart', (
@@ -169,17 +184,23 @@ class Migration(SchemaMigration):
         # Deleting model 'SubCategory'
         db.delete_table(u'website_subcategory')
 
-        # Deleting model 'Image'
-        db.delete_table(u'website_image')
+        # Deleting model 'ProductImage'
+        db.delete_table(u'website_productimage')
 
         # Deleting model 'Thumbnail'
         db.delete_table(u'website_thumbnail')
+
+        # Deleting model 'Color'
+        db.delete_table(u'website_color')
 
         # Deleting model 'Product'
         db.delete_table(u'website_product')
 
         # Deleting model 'StockItem'
         db.delete_table(u'website_stockitem')
+
+        # Removing M2M table for field colors on 'StockItem'
+        db.delete_table('website_stockitem_colors')
 
         # Deleting model 'Cart'
         db.delete_table(u'website_cart')
@@ -256,16 +277,14 @@ class Migration(SchemaMigration):
         u'website.category': {
             'Meta': {'object_name': 'Category'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '128'})
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
+            'slug': ('django.db.models.fields.CharField', [], {'max_length': '128', 'null': 'True', 'blank': 'True'})
         },
-        u'website.image': {
-            'Meta': {'ordering': "['order']", 'object_name': 'Image'},
-            'height': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
+        u'website.color': {
+            'Meta': {'object_name': 'Color'},
+            'code': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'image': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'order': ('django.db.models.fields.PositiveSmallIntegerField', [], {'default': '0'}),
-            'product': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'images'", 'null': 'True', 'to': u"orm['website.Product']"}),
-            'width': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'})
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '30'})
         },
         u'website.order': {
             'Meta': {'ordering': "['status', 'order_date']", 'object_name': 'Order'},
@@ -302,13 +321,20 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
             'price': ('django.db.models.fields.IntegerField', [], {}),
-            'publish_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'sale_end_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'publish_date': ('django.db.models.fields.DateField', [], {}),
+            'sale_end_date': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
             'sale_type': ('django.db.models.fields.PositiveSmallIntegerField', [], {'null': 'True', 'blank': 'True'}),
             'sale_value': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'sku': ('django.db.models.fields.CharField', [], {'max_length': '32'}),
             'story': ('django.db.models.fields.TextField', [], {}),
             'sub_category': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['website.SubCategory']", 'null': 'True', 'blank': 'True'})
+        },
+        u'website.productimage': {
+            'Meta': {'ordering': "['order']", 'object_name': 'ProductImage'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'image': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
+            'order': ('django.db.models.fields.PositiveSmallIntegerField', [], {'default': '0'}),
+            'product': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'images'", 'null': 'True', 'to': u"orm['website.Product']"})
         },
         u'website.promo': {
             'Meta': {'object_name': 'Promo'},
@@ -328,8 +354,9 @@ class Migration(SchemaMigration):
         },
         u'website.stockitem': {
             'Meta': {'unique_together': "(['product', 'size'],)", 'object_name': 'StockItem'},
+            'colors': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': u"orm['website.Color']", 'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'product': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['website.Product']"}),
+            'product': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'stock_items'", 'to': u"orm['website.Product']"}),
             'size': ('django.db.models.fields.PositiveSmallIntegerField', [], {}),
             'stock': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'})
         },
