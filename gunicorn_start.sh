@@ -1,13 +1,13 @@
 #!/bin/bash
 
-NAME="Kulayan Server"                             # Name of the application
-DJANGODIR=/home/web/website/kulayan             	# Django project directory
+NAME="Kulayan Server"               # Name of the application
+DJANGODIR=/home/web/website/kulayan       	# Django project directory
 SOCKFILE=/home/web/website/run/gunicorn.sock  		# we will communicte using this unix socket
-USER=web                                       		# the user to run as
-GROUP=web                                      		# the group to run as
-NUM_WORKERS=3                                     # how many worker processes should Gunicorn spawn
-DJANGO_SETTINGS_MODULE=kulayan.settings           # which settings file should Django use
-DJANGO_WSGI_MODULE=kulayan.wsgi                    # WSGI module name
+USER=web                     		# the user to run as
+GROUP=web                    		# the group to run as
+NUM_WORKERS=3                   # how many worker processes should Gunicorn spawn
+DJANGO_SETTINGS_MODULE=kulayan.settings       # which settings file should Django use
+DJANGO_WSGI_MODULE=kulayan.wsgi          # WSGI module name
 
 echo "Starting $NAME"
 

@@ -1,0 +1,22 @@
+{
+  "name": "kulayan",
+  "version": "0.0.0",
+  "description": "kulayan.com website",
+  "main": "index.js",
+  "dependencies": {
+    "nib": "~1.0.1"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib": "~0.8.0",
+    "grunt-contrib-jade": "~0.8.0",
+    "grunt-contrib-coffee": "~0.8.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ca136/kulayan.git"
+  },
+  "author": "ca136",
+  "gitHead": "65583a9f91c9f7e162310b50712f7b7a367c5ab0",
+  "readmeFilename": "README.md"
+}

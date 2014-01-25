@@ -27,6 +27,8 @@ class Migration(SchemaMigration):
         # Adding model 'ProductImage'
         db.create_table(u'website_productimage', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('height', self.gf('django.db.models.fields.PositiveIntegerField')()),
+            ('width', self.gf('django.db.models.fields.PositiveIntegerField')()),
             ('image', self.gf('django.db.models.fields.files.ImageField')(max_length=100, null=True, blank=True)),
             ('product', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='images', null=True, to=orm['website.Product'])),
             ('order', self.gf('django.db.models.fields.PositiveSmallIntegerField')(default=0)),
@@ -331,10 +333,12 @@ class Migration(SchemaMigration):
         },
         u'website.productimage': {
             'Meta': {'ordering': "['order']", 'object_name': 'ProductImage'},
+            'height': ('django.db.models.fields.PositiveIntegerField', [], {}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'image': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'order': ('django.db.models.fields.PositiveSmallIntegerField', [], {'default': '0'}),
-            'product': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'images'", 'null': 'True', 'to': u"orm['website.Product']"})
+            'product': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'images'", 'null': 'True', 'to': u"orm['website.Product']"}),
+            'width': ('django.db.models.fields.PositiveIntegerField', [], {})
         },
         u'website.promo': {
             'Meta': {'object_name': 'Promo'},

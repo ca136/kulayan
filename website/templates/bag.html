@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block main %}
+  <div>{{bag.cart_date}}</div>
+
+  {% for item in bag.cart_items.all %}
+    <div>{{item.price_per}}</div>{
+  % endfor %}
+
+{% endblock main %}
