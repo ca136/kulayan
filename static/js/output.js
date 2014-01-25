@@ -1,13 +1,13 @@
 (function() {
   var app;
 
-  app = angular.module("app", ["LocalStorageModule", "ngCookies"]);
+  app = angular.module('app', ['LocalStorageModule', 'ngCookies']);
 
   app.config(function($interpolateProvider, $httpProvider) {
-    $interpolateProvider.startSymbol("((");
-    $interpolateProvider.endSymbol("))");
-    $httpProvider.defaults.xsrfCookieName = "csrftoken";
-    return $httpProvider.defaults.xsrfHeaderName = "X-CSRFToken";
+    $interpolateProvider.startSymbol('((');
+    $interpolateProvider.endSymbol('))');
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    return $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
   });
 
 }).call(this);
@@ -942,66 +942,134 @@
 (function() {
   var app;
 
-  app = angular.module("app").controller("ProductCtrl", [
-    "$scope", "cart", function($scope, cart) {
-      window.SCOPE = $scope;
-      SCOPE.cart = cart;
+  app = angular.module('app').controller('ProductCtrl', [
+    '$scope', 'cart', function($scope, cart) {
+      $scope.cart = cart;
       $scope.product = product;
       $scope.options = window.options = {};
       $scope.addToBag = function() {
-        var item;
+        var cartItem;
         if (!$scope.options.color || !$scope.options.size) {
-          return alert("Please select a size and color");
+          return alert('Please select a size and color');
         } else {
-          item = _.extend($scope.options, {
+          cartItem = _.extend($scope.options, {
             thumbnail: $scope.product.images[0].url,
             name: $scope.product.name,
             price: $scope.product.price,
             quantity: 1
           });
-          cart.addItem(item);
-          return $scope.$emit("addToCart");
+          cart.addItem(cartItem);
+          return $scope.$emit('addToCart');
         }
       };
-      $scope.selectOption = function(type, value) {
+      $scope.selectOption = function(type, value, option) {
+        var color, colorItem, stock, stockColor, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2, _ref3, _results, _results1;
+        if (option.inactive) {
+          return;
+        }
         $scope.options[type] = value;
-        if ($scope.options.color && $scope.options.size) {
-          return $scope.cartActive = true;
+        $scope.cartActive = $scope.options.color && $scope.options.size && true || false;
+        option.selected = true;
+        if (type === 'color') {
+          _ref = $scope.product.colors;
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            color = _ref[_i];
+            color.inactive = false;
+            if (color !== option) {
+              color.selected = false;
+            }
+          }
+          _ref1 = $scope.product.stock_items;
+          _results = [];
+          for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+            stock = _ref1[_j];
+            stock.inactive = true;
+            _results.push((function() {
+              var _k, _len2, _ref2, _results1;
+              _ref2 = stock.color;
+              _results1 = [];
+              for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+                colorItem = _ref2[_k];
+                if (colorItem.code === value) {
+                  _results1.push(stock.inactive = false);
+                } else {
+                  _results1.push(void 0);
+                }
+              }
+              return _results1;
+            })());
+          }
+          return _results;
+        } else {
+          _ref2 = $scope.product.stock_items;
+          for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+            stock = _ref2[_k];
+            stock.inactive = false;
+            if (stock !== option) {
+              stock.selected = false;
+            }
+          }
+          _ref3 = $scope.product.colors;
+          _results1 = [];
+          for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
+            color = _ref3[_l];
+            color.inactive = true;
+            _results1.push((function() {
+              var _len4, _m, _ref4, _results2;
+              _ref4 = $scope.product.stock_items;
+              _results2 = [];
+              for (_m = 0, _len4 = _ref4.length; _m < _len4; _m++) {
+                stock = _ref4[_m];
+                if (stock.size_value === value) {
+                  _results2.push((function() {
+                    var _len5, _n, _ref5, _results3;
+                    _ref5 = stock.color;
+                    _results3 = [];
+                    for (_n = 0, _len5 = _ref5.length; _n < _len5; _n++) {
+                      stockColor = _ref5[_n];
+                      if (stockColor.code === color.code) {
+                        _results3.push(color.inactive = false);
+                      } else {
+                        _results3.push(void 0);
+                      }
+                    }
+                    return _results3;
+                  })());
+                } else {
+                  _results2.push(void 0);
+                }
+              }
+              return _results2;
+            })());
+          }
+          return _results1;
         }
       };
       $scope.getImageDims = function(image) {
         var containerWidth, modifier, scaledHeight;
-        containerWidth = angular.element(".product-images-container").width();
+        containerWidth = angular.element('.product-images-container').width();
         modifier = image.width / containerWidth;
         scaledHeight = image.height / modifier;
-        return containerWidth + ", " + scaledHeight;
+        return containerWidth + ', ' + scaledHeight;
       };
       return jQuery(document).ready(function($) {
-        $("#productStory, #productDetails").click(function(e) {
-          if ($(e.currentTarget).hasClass("active")) {
+        $('#productStory, #productDetails').click(function(e) {
+          if ($(e.currentTarget).hasClass('active')) {
             return;
           }
-          $(".descTab").toggleClass("active");
-          return $(".descContainer").toggleClass("active");
+          $('.descTab').toggleClass('active');
+          return $('.descContainer').toggleClass('active');
         });
-        $(".color-option").click(function(e) {
-          $(".color-option").removeClass("active");
-          return $(e.currentTarget).addClass("active");
-        });
-        $(".size-option").click(function(e) {
-          $(".size-option").removeClass("active");
-          return $(e.currentTarget).addClass("active");
-        });
-        $("#mainImage").addimagezoom({
+        $('#mainImage').addimagezoom({
           zoomrange: [3],
           magnifiersize: [600, 600],
-          magnifierpos: "right"
+          magnifierpos: 'right'
         });
-        return $("[data-share-icon]").click(function(e) {
+        return $('[data-share-icon]').click(function(e) {
           var imgSrcList, newSrc;
-          imgSrcList = $(this).attr("src").split(".");
-          newSrc = imgSrcList[0] + "-active." + imgSrcList[1];
-          return $(this).attr("src", newSrc);
+          imgSrcList = $(this).attr('src').split('.');
+          newSrc = imgSrcList[0] + '-active.' + imgSrcList[1];
+          return $(this).attr('src', newSrc);
         });
       });
     }
@@ -1012,23 +1080,23 @@
 (function() {
   var app;
 
-  app = angular.module("app").controller("ShopCtrl", [
-    "$scope", function($scope) {
+  app = angular.module('app').controller('ShopCtrl', [
+    '$scope', function($scope) {
       $scope.sizes = [
         {
-          name: "XS",
+          name: 'XS',
           active: false
         }, {
-          name: "S",
+          name: 'S',
           active: false
         }, {
-          name: "M",
+          name: 'M',
           active: false
         }, {
-          name: "L",
+          name: 'L',
           active: false
         }, {
-          name: "XL",
+          name: 'XL',
           active: false
         }
       ];
@@ -1036,31 +1104,42 @@
       _.each(products, function(product) {
         return $scope.products.push(JSON.parse(product));
       });
-      $scope.sortOptions = ["publish_date", "price", "name"];
+      $scope.sortOptions = ['publish_date', 'price', 'name'];
       $scope.activeSearch = {
         sizes: [],
-        sortyBy: "",
-        page: ""
+        sortBy: '',
+        page: '',
+        category: document.location.pathname.split('/')[2]
       };
       $scope.filterBySize = function(product) {
-        var returnVal;
-        returnVal = void 0;
+        var returnVal, size, stockItem, _i, _j, _len, _len1, _ref, _ref1;
+        returnVal = false;
         if (!$scope.activeSearch.sizes.length) {
           return true;
         }
-        _.each(product.stock_items, function(stockItem) {
-          if ($scope.activeSearch.sizes.indexOf(stockItem.size_value) !== -1) {
-            return returnVal = true;
+        _ref = product.stock_items;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          stockItem = _ref[_i];
+          _ref1 = $scope.activeSearch.sizes;
+          for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+            size = _ref1[_j];
+            if (size.name === stockItem.size_value) {
+              returnVal = true;
+            }
           }
-        });
-        return returnVal || false;
+        }
+        return returnVal;
       };
       $scope.filterSize = function(size) {
         var sizes;
-        size.active = (size.active ? false : true);
+        console.log(size);
+        size.active = !size.active;
         sizes = $scope.activeSearch.sizes;
         if (!size.active) {
           sizes.splice(sizes.indexOf(size.name), 1);
+        }
+        if (size.active) {
+          sizes.push(size);
         }
         return $scope.search();
       };

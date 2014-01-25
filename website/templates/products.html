@@ -1,38 +1,54 @@
-
 {% extends "base.html" %}
 {% load paginator %}
+
 {% block head %}
-<script src="/static/select2/select2.js"></script>
-<link href="/static/select2/select2.css" rel="stylesheet" type="text/css"/>
-<script src="/static/js/controllers/products.js"></script>{% endblock head %}
+  <script src="/static/select2/select2.js"></script>
+  <link href="/static/select2/select2.css" rel="stylesheet" type="text/css"/>
+{% endblock head %}
+
 {% block main %}
-<div ng-controller="ShopCtrl" class="products-page">
-  <div class="products-navigation">
-    <div class="bread-crumbs"><a href="/">Home</a>{% if category %} > &nbsp;<a>{{category}}</a>{% endif %}</div>
-  </div>
-  <div class="filter-container">
-    <div class="sort-by-container">
-      <h4 class="sort-label">Sort by:</h4>
-      <select ng-model="sortBy" ng-change="search()" ng-options="sort for sort in sortOptions"></select>
-    </div>
-    <div class="size-filter-container">
-      <h4 class="sort-label">Filter by size:</h4>
-      <div name="disp_order_size" class="size-filter-selector"><span ng-class="(size.active) ? 'active': ''" ng-repeat="size in sizes" ng-click="filterSize(size)" class="size-filter-item">((size.name))</span></div>
-    </div><a class="filter-reset fade">Go</a>
-  </div>
-  <ul class="productListings">
-    <li ng-repeat="product in products | filter:filterBySize | orderBy:predicate"><a href="((product.url))">
-        <div style="background-image: url( ((product.images.0.url)) )" class="product-listing"></div>
-        <h3 class="product-listing-name">((product.name))</h3>
-        <div><strong>$((product.price))</strong></div></a>
-      <div style="text-align: center;" class="outerListcolors">
-        <li ng-repeat="color in product.colors">
-          <div class="listColors"></div>
-        </li>
+  <div ng-controller="ShopCtrl" class="products-page">
+    <div class="products-navigation">
+      <div class="bread-crumbs">
+        <a href="/">Home</a>
+        {% if category %}
+          &gt; &nbsp; <a>{{category}}</a>
+        {% endif %}
       </div>
-    </li>
-  </ul>
-</div>{% endblock main%}
+    </div>
+    <div class="filter-container">
+      <div class="sort-by-container">
+        <h4 class="sort-label">Sort by:</h4>
+        <select ng-model="sortBy" ng-change="search()" ng-options="sort for sort in sortOptions"></select>
+      </div>
+      <div class="size-filter-container">
+        <h4 class="sort-label">Filter by size:</h4>
+        <div name="disp_order_size" class="size-filter-selector">
+          <span ng-class="(size.active) ? 'active': ''" ng-repeat="size in sizes" ng-click="filterSize(size)" class="size-filter-item">
+            ((size.name))
+          </span>
+        </div>
+      </div><a class="filter-reset fade">Go</a>
+    </div>
+    <ul class="productListings">
+      <li ng-repeat="product in products | filter:filterBySize | orderBy:predicate">
+        <a href="((product.url))">
+          <div style="background-image: url( ((product.images.0.url)) )" class="product-listing"></div>
+          <h3 class="product-listing-name">((product.name))</h3>
+          <div>
+            <strong>$((product.price))</strong>
+          </div>
+        </a>
+        <div style="text-align: center;" class="outerListcolors">
+          <li ng-repeat="color in product.colors">
+            <div class="listColors"></div>
+          </li>
+        </div>
+      </li>
+    </ul>
+  </div>
+{% endblock main%}
+
 {% block scripts %}
-<script>products = {{products|safe|default:'[]'}};</script>
-<script src="/static/js/controllers/products.js"></script>{% endblock scripts %}
+  <script>products = {{products|safe|default:'[]'}};</script>
+{% endblock scripts %}

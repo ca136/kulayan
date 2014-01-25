@@ -1,11 +1,54 @@
 
-<div class="pager">{% if page.has_previous %}<span class="page"><a href="{% for k,v in get_params %}?{{k}}={{v}}&amp;{% endfor %}?page={{ page.previous_page_number }}"><</a></span>{% endif %}
-  {% if page.number > 2 %}<span class="page"><a href="?{% for k,v in get_params %}{{k}}={{v}}&amp;{% endfor %}page=1">1</a></span><span class="ellipsis">...</span>{% endif %}
-  {% for linkpage in page.paginator.page_range %}
-  {% if linkpage == page.number %}<span class="current">{{ page.number }}</span>{% else %}
-  {% if linkpage > page.number|add:"-2" and linkpage < page.number|add:"2" %}<span class="page"><a href="?page={{ linkpage }}{% for k,v in get_params %}&amp;amp;{{k}}={{v}}{% endfor %}">{{ linkpage }}</a></span>{% endif %}
+<div class="pager">
+  {% if page.has_previous %}
+    <span class="page">
+      <a href="{% for k,v in get_params %}?{{k}}={{v}}&amp;{% endfor %}?page={{ page.previous_page_number }}">
+        &lt;
+      </a>
+    </span>
   {% endif %}
+
+  {% if page.number > 2 %}
+    <span class="page">
+      <a href="?{% for k,v in get_params %}{{k}}={{v}}&amp;{% endfor %}page=1">
+        1
+      </a>
+    </span>
+    <span class="ellipsis">
+      ...
+    </span>
+  {% endif %}
+
+  {% for linkpage in page.paginator.page_range %}
+    {% if linkpage == page.number %}
+      <span class="current">{{ page.number }}</span>
+    {% else %}
+      {% if linkpage > page.number|add:"-2" and linkpage < page.number|add:"2" %}
+        <span class="page">
+          <a href="?page={{ linkpage }}{% for k,v in get_params %}&amp;amp;{{k}}={{v}}{% endfor %}">
+            {{ linkpage }}
+          </a>
+        </span>
+      {% endif %}
+    {% endif %}
   {% endfor %}
-  {% if page.number < page.paginator.num_pages|add:"-1" %}<span class="ellipsis">...</span><span class="page"><a hre="?page={{ page.paginator.num_pages }}{% for k,v in get_params %}&amp;amp;{{k}}={{v}}{% endfor %}">{{ page.paginator.num_pages }}</a></span>{% endif %}
-  {% if page.has_next %}<span class="page"><a href="?page={{ page.next_page_number }}{% for k,v in get_params %}&amp;amp;{{k}}={{v}}{% endfor %}">&gt;</a></span>{% endif %}
+
+  {% if page.number < page.paginator.num_pages|add:"-1" %}
+    <span class="ellipsis">
+      ...
+    </span>
+    <span class="page">
+      <a hre="?page={{ page.paginator.num_pages }}{% for k,v in get_params %}&amp;amp;{{k}}={{v}}{% endfor %}">
+        {{ page.paginator.num_pages }}
+      </a>
+    </span>
+  {% endif %}
+
+  {% if page.has_next %}
+    <span class="page">
+      <a href="?page={{ page.next_page_number }}{% for k,v in get_params %}&amp;amp;{{k}}={{v}}{% endfor %}">
+        &gt;
+      </a>
+    </span>
+  {% endif %}
 </div>

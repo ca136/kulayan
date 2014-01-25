@@ -21,6 +21,13 @@ class Category(models.Model):
   def get_url(self):
     return '/shop/{0}/'.format(self.slug)
 
+  def get_json(self):
+    return {
+      'name': self.name,
+      'slug': self.slug,
+      'url': self.get_url()
+    }
+
 
 class SubCategory(models.Model):
   name = models.CharField(max_length=128)
@@ -113,7 +120,8 @@ class Product(models.Model):
         'width': image.width
       } for image in self.images.all() ],
       'stock_items': [ stock_item.get_json() for stock_item in self.stock_items.all() ],
-      'colors': [ color.get_json() for color in colors ]
+      'colors': [ color.get_json() for color in colors ],
+      'category': self.category.get_json()
     }
 
   class Meta:

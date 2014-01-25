@@ -570,8 +570,13 @@ select
       cursor pointer
       margin 2px
 
-      &.active
+      &.selected
         border 1px solid rgba(10, 10, 10, 0.8)
+
+      &.inactive
+        opacity 0.3
+        border none
+        cursor auto
 
     .cart-container
       position absolute

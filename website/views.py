@@ -73,19 +73,20 @@ def shop(request, category=""):
   template_data = {}
   template_data['categories'] = Category.objects.all()
 
-  template_data['products'] = [ json.dumps(product.get_json()) for product in \
-    Product.objects.filter(publish_date__lte=datetime.now()) ]
+  products = Product.objects.filter(publish_date__lte=datetime.now())
+
+  category_instance = ''
+  if category:
+    category_instance = Category.objects.get(slug__iexact=category)
+    products = products.filter(category=category_instance)
+  else:
+    products = products.filter(publish_date__lte=datetime.now())
+
+  template_data['products'] = [ json.dumps(product.get_json()) for product in products ]
 
   # REMOVING PAGINATION ON BACKEND AND SENDING ALL
   # PRODUCT DATA FOR THE FRONTEND TO DEAL WITH
-
-  # category_instance = ''
-  # if category:
-  #   category_instance = Category.objects.get(slug__iexact=category)
-  #   products = Product.objects.filter(category=category_instance)
-  # else:
-  #   products = Product.objects.filter(publish_date__lte=datetime.now())
-
+  #
   # paginator = Paginator(products, 20)
   # page_number = request.GET.get('page', 1)
   # page = paginator.page(page_number)

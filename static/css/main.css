@@ -94,7 +94,8 @@ select{border:1px solid #6495ed}
 .product-page .product-choice-container .share-container{position:absolute;right:10px;top:124px}
 .product-page .product-choice-container .choice-label{margin-top:0}
 .product-page .product-choice-container .color-option,.product-page .product-choice-container .size-option{height:30px;width:30px;display:inline-block;border:1px solid rgba(0,0,0,0);cursor:pointer;margin:2px;}
-.product-page .product-choice-container .color-option.active,.product-page .product-choice-container .size-option.active{border:1px solid rgba(10,10,10,0.8)}
+.product-page .product-choice-container .color-option.selected,.product-page .product-choice-container .size-option.selected{border:1px solid rgba(10,10,10,0.8)}
+.product-page .product-choice-container .color-option.inactive,.product-page .product-choice-container .size-option.inactive{opacity:.3;border:none;cursor:auto}
 .product-page .product-choice-container .cart-container{position:absolute;text-align:right;top:50px;right:10px}
 .product-page .product-choice-container .add-to-cart{height:32px;width:150px;background:#f16666;color:#fff;line-height:32px;text-align:center;opacity:.5;}
 .product-page .product-choice-container .add-to-cart.active{opacity:1;cursor:pointer}
