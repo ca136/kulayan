@@ -22,7 +22,8 @@ app = angular.module('app')
   _.each products, (product) ->
     $scope.products.push JSON.parse(product)
 
-  $scope.sortOptions = ['publish_date', 'price', 'name']
+  $scope.sortOptions = ['publish date', 'price', 'name']
+  $scope.sortBy = 'publish date'
   $scope.activeSearch =
     sizes: []
     sortBy: ''
@@ -41,7 +42,6 @@ app = angular.module('app')
     returnVal
 
   $scope.filterSize = (size) ->
-    console.log size
     size.active = not size.active
     sizes = $scope.activeSearch.sizes
 
@@ -51,8 +51,6 @@ app = angular.module('app')
     $scope.search()
 
   $scope.search = ->
-    $scope.activeSearch.sortBy = $scope.predicate = $scope.sortBy
-    console.log $scope.activeSearch
+    $scope.activeSearch.sortBy = $scope.predicate = $scope.sortBy.split(' ').join('_')
 
-  window.SCOPE = $scope
 ]

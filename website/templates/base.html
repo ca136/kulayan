@@ -198,19 +198,41 @@
           </form>
         </div>
         <div class="form-title">Order Summary</div>
-        <div class="cart-subtotal">
-          Subtotal: <span class="total-price">$(( getSubTotal(cartData.cartItems) ))</span>
+        <div class="order-summary-container">
+          <div class="order-summary-products">
+            <div ng-repeat="item in cartData.cartItems" class="cart-item">
+              <div class="cart-thumbnail" style="background-image: url( ((item.thumbnail)) );"></div>
+              <div class="cart-item-details">
+                <div class="cart-item-title">((item.name))</div>
+                <div class="cart-item-options">
+                  <span>
+                    <span>Color:</span>
+                    <div class="cart-color-box" style="background: ((item.color));"></div>
+                  </span>
+                  <span>| Size: ((item.size))</span>
+                </div>
+              </div>
+              <div class="cart-item-quantity">((item.quantity))</div>
+              <div class="cart-item-price">$((item.price))</div>
+            </div>
+          </div>
+
+          <div class="order-summary-price">
+            <div class="cart-subtotal">
+              Subtotal: <span class="total-price">$(( getSubTotal(cartData.cartItems) ))</span>
+            </div>
+            <div class="cart-shipping">
+              Shipping: <span class="total-price">$(( getShipping(cartData.cartItems) ))</span>
+            </div>
+            <div class="cart-shipping">
+              Tax: $<span ng-bind="checkoutData.salesTax">0</span>
+            </div>
+            <div class="cart-total">
+              Total: <span class="total-price">$(( getSubTotal(cartData.cartItems) + getShipping(cartData.cartItems) ))</span>
+            </div>
+            <div class="checkout-button" ng-click="submitPayment(checkoutData)">Submit Payment &#10140;</div>
+          </div>
         </div>
-        <div class="cart-shipping">
-          Shipping: <span class="total-price">$(( getShipping(cartData.cartItems) ))</span>
-        </div>
-        <div class="cart-shipping">
-          Tax: $<span ng-bind="checkoutData.salesTax">0</span>
-        </div>
-        <div class="cart-total">
-          Total: <span class="total-price">$(( getSubTotal(cartData.cartItems) + getShipping(cartData.cartItems) ))</span>
-        </div>
-        <div class="checkout-button" ng-click="submitPayment(checkoutData)">Submit Payment &#10140;</div>
 
         <div ng-click="backToCart()" style="margin-top 60px;">BACK TO CART</div>
 

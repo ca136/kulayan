@@ -20,9 +20,9 @@ import csv, datetime, urllib2, urlparse
 from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
 from website.models import *
-
+from datetime import datetime
 listings = []
-with open('listings.csv', 'rU') as f:
+with open('website/listings.csv', 'rU') as f:
   reader = csv.reader(f)
   for row in reader:
     listings.append(row)
@@ -31,7 +31,7 @@ for listing in listings[1:]:
   product = Product(name=unicode(listing[0])[:150])
   product.story = unicode(listing[1], errors='replace')
   product.price = int(listing[2])
-  product.publish_date = datetime.datetime.now()
+  product.publish_date = datetime.now()
   product.details = ''
   product.category_id = 1
   product.quantity = listing[3]

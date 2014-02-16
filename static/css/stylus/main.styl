@@ -92,7 +92,8 @@ select
     background-image: url('/static/images/green-watercolor.png');
     background-size 100% 100%
     background-repeat no-repeat
-    height 80px
+    background-position 15px 0px;
+    height 75px
     width 100%
     margin 0 auto
     position relative
@@ -114,9 +115,10 @@ select
       margin-bottom 10px
       position relative
       z-index 5
-      padding 0
-      margin 0
       text-align center
+      border-bottom 1px solid rgba(0,0,0,0.15)
+      padding 0 0 6px
+      margin 0 75px
 
       .nav-item
         display inline-block
@@ -125,6 +127,7 @@ select
 
         &:hover .nav-sub-list
           left 0
+          top 37px
           padding 5px
           margin-left -10px
 
@@ -135,6 +138,15 @@ select
 
         &:hover
           text-decoration none
+
+        &::after
+          content ''
+          position absolute
+          top -10px
+          bottom -10px
+          right -10px
+          left -10px
+
 
         .nav-item:hover &
           color: #444
@@ -338,6 +350,23 @@ select
       &:hover
         opacity 1
 
+  .order-summary-container
+    font-size 0
+
+    .order-summary-products
+      font-size 12px
+      display inline-block
+      width 50%
+
+      .cart-thumbnail
+        height 70px
+        width 50px
+
+    .order-summary-price
+      font-size 12px
+      display inline-block
+      width 50%
+
   .cart-total
     text-align right
     padding-right 30px
@@ -511,6 +540,43 @@ select
 
       &.fade
         opacity 0
+
+  .product-listings
+    width 100%
+    margin 0
+    padding 0
+    font-size 0
+
+  .product-listing
+    width 200px
+    list-style none
+    display inline-block
+    margin 20px 30px 20px 0
+
+  .product-listing-thumb
+    height 290px
+    background-size cover
+    width 200px
+    background-repeat no-repeat
+    background-position 50%
+
+  .product-listing-name
+    font-size 12px
+    height 30px
+    width 170px
+    margin-right 2px
+    display inline-block
+    overflow hidden
+    vertical-align middle
+
+  .product-listing-price
+    font-size 12px
+    display inline-block
+    height 30px
+    width 26px
+    line-height 30px
+    vertical-align middle
+    text-align right
 
 // PRODUCT PAGE
 .product-page
