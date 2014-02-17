@@ -45,9 +45,13 @@ body
 .tumblr-icon:hover
   background-image url(/static/images/icons/tumblr-active.png)
 
-
 select
   border 1px solid cornflowerblue
+
+.shopping-cart
+  margin-right 10px
+  vertical-align middle
+  cursor pointer
 
 .container
   position relative
@@ -92,7 +96,8 @@ select
     background-image: url('/static/images/green-watercolor.png');
     background-size 100% 100%
     background-repeat no-repeat
-    height 80px
+    background-position 15px 0px;
+    height 75px
     width 100%
     margin 0 auto
     position relative
@@ -114,9 +119,10 @@ select
       margin-bottom 10px
       position relative
       z-index 5
-      padding 0
-      margin 0
       text-align center
+      border-bottom 1px solid rgba(0,0,0,0.15)
+      padding 0 0 6px
+      margin 0 75px
 
       .nav-item
         display inline-block
@@ -125,6 +131,7 @@ select
 
         &:hover .nav-sub-list
           left 0
+          top 37px
           padding 5px
           margin-left -10px
 
@@ -135,6 +142,15 @@ select
 
         &:hover
           text-decoration none
+
+        &::after
+          content ''
+          position absolute
+          top -10px
+          bottom -10px
+          right -10px
+          left -10px
+
 
         .nav-item:hover &
           color: #444
@@ -241,7 +257,8 @@ select
     background white
     box-shadow 0 0 8px 4px rgba(0, 0, 0, 0.15)
     border 2px solid rgba(0, 0, 0, 0.65)
-    transition 1s ease-in-out
+    transition 0.3s ease-in-out
+    padding 10px 30px
 
     &.slide
       transform translate(-105%, 0)
@@ -338,21 +355,43 @@ select
       &:hover
         opacity 1
 
+  .order-summary-container
+    font-size 0
+    vertical-align top
+
+    .order-summary-products
+      font-size 12px
+      display inline-block
+      width 50%
+
+      .cart-thumbnail
+        height 70px
+        width 50px
+
+    .order-summary-price
+      vertical-align top
+      font-size 12px
+      display inline-block
+      width 50%
+
   .cart-total
     text-align right
-    padding-right 30px
     font-weight bold
     font-size 18px
 
   .cart-shipping, .cart-subtotal
     text-align right
-    padding-right 30px
     font-weight bold
     font-size 16px
 
   .total-price
-    width 50px
+    width 80px
     display inline-block
+
+  .back-to-cart
+    margin-top 60px
+    font-size 14px
+    cursor pointer
 
   .checkout-button
     text-align center
@@ -369,6 +408,10 @@ select
       opacity 0.8
       cursor pointer
 
+  .back-to-cart
+    display inline-block
+    margin-right 50px
+
   .checkout-inner-container
     overflow auto
     position absolute
@@ -383,36 +426,43 @@ select
     background white
     box-shadow 0 0 8px 4px rgba(0, 0, 0, 0.15)
     border 2px solid rgba(0, 0, 0, 0.65)
-    transition 1s ease-in-out
+    transition 0.3s ease-in-out
     transform translate(105%, 0)
     opacity 0
-    font-size 14px
+    padding 10px 30px
+    box-sizing border-box
+    font-size 0
 
     &.slide
       transform translate(0, 0)
       opacity 1
 
     .left-panel, .right-panel
-      width 49%
+      width 50%
       display inline-block
       vertical-align top
       min-width 320px
 
     form
-      width 320px
+      width 100%
       display block
-      margin 0 auto
+      font-size 14px
 
     .form-title
       text-decoration underline
       margin-left 10px
       margin-top 15px
       margin-bottom 15px
+      font-size 14px
 
     .shipping-form
 
       input
-        width 160px
+        width 200px
+
+      select
+        width 320px
+        margin 0 10px 8px
 
     .field-container
       margin 8px
@@ -441,7 +491,8 @@ select
     .payment-form
 
       .payment-errors
-        display none
+        display block
+        height 30px
 
       span
         margin-right 10px
@@ -511,6 +562,43 @@ select
 
       &.fade
         opacity 0
+
+  .product-listings
+    width 100%
+    margin 0
+    padding 0
+    font-size 0
+
+  .product-listing
+    width 200px
+    list-style none
+    display inline-block
+    margin 20px 30px 20px 0
+
+  .product-listing-thumb
+    height 290px
+    background-size cover
+    width 200px
+    background-repeat no-repeat
+    background-position 50%
+
+  .product-listing-name
+    font-size 12px
+    height 30px
+    width 170px
+    margin-right 2px
+    display inline-block
+    overflow hidden
+    vertical-align middle
+
+  .product-listing-price
+    font-size 12px
+    display inline-block
+    height 30px
+    width 26px
+    line-height 30px
+    vertical-align middle
+    text-align right
 
 // PRODUCT PAGE
 .product-page

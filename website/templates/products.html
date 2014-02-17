@@ -30,14 +30,12 @@
         </div>
       </div><a class="filter-reset fade">Go</a>
     </div>
-    <ul class="productListings">
-      <li ng-repeat="product in products | filter:filterBySize | orderBy:predicate">
+    <ul class="productListings product-listings">
+      <li ng-repeat="product in products | filter:filterBySize | orderBy:predicate" class="product-listing">
         <a href="((product.url))">
-          <div style="background-image: url( ((product.images.0.url)) )" class="product-listing"></div>
-          <h3 class="product-listing-name">((product.name))</h3>
-          <div>
-            <strong>$((product.price))</strong>
-          </div>
+          <div style="background-image: url( ((product.images.0.url)) )" class="product-listing-thumb"></div>
+          <h3 class="product-listing-name">((product.name))</h3><!--
+          --><div class="product-listing-price">$((product.price))</div>
         </a>
         <div style="text-align: center;" class="outerListcolors">
           <li ng-repeat="color in product.colors">

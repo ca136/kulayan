@@ -27,34 +27,6 @@
   display: none;
 }
 
-.productListings {
-  clear: both;
-  padding: 0;
-  margin: 0;
-}
-
-.productListings li {
-  width: 200px;
-  list-style: none;
-  display: inline-block;
-  margin: 20px 10px;
-}
-
-.product-listing {
-  height: 290px;
-  background-size: contain;
-  width: 200px;
-  background-repeat: no-repeat;
-  background-position: 50%;
-}
-
-.product-listing-name {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 190px;
-}
-
 .product-page .product-thumbnails {
   display: inline-block;
   width: auto;
@@ -253,11 +225,6 @@
 }
 #nav li:hover ul li a:hover{ /* Here we define the most explicit hover states--what happens when you hover each individual link. */
   /*background:#333;*/
-}
-
-.shopping-cart {
-  margin-right: 10px;
-  vertical-align: middle;
 }
 
 .cart-icon {

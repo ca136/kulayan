@@ -90,7 +90,9 @@
       $scope.cartData.cartItems = cart.getItems();
       $scope.checkoutData = {
         salesTax: 0,
-        country: "United States"
+        country: {
+          name: "United States"
+        }
       };
       $scope.staticData = {
         countries: COUNTRIES
@@ -175,8 +177,6 @@
       name: "The Netherlands"
     }, {
       name: "United Kingdom"
-    }, {
-      name: "United States"
     }, {
       name: "Afghanistan",
       other: "-----"
@@ -1104,7 +1104,8 @@
       _.each(products, function(product) {
         return $scope.products.push(JSON.parse(product));
       });
-      $scope.sortOptions = ['publish_date', 'price', 'name'];
+      $scope.sortOptions = ['publish date', 'price', 'name'];
+      $scope.sortBy = 'publish date';
       $scope.activeSearch = {
         sizes: [],
         sortBy: '',
@@ -1132,7 +1133,6 @@
       };
       $scope.filterSize = function(size) {
         var sizes;
-        console.log(size);
         size.active = !size.active;
         sizes = $scope.activeSearch.sizes;
         if (!size.active) {
@@ -1143,11 +1143,9 @@
         }
         return $scope.search();
       };
-      $scope.search = function() {
-        $scope.activeSearch.sortBy = $scope.predicate = $scope.sortBy;
-        return console.log($scope.activeSearch);
+      return $scope.search = function() {
+        return $scope.activeSearch.sortBy = $scope.predicate = $scope.sortBy.split(' ').join('_');
       };
-      return window.SCOPE = $scope;
     }
   ]);
 
