@@ -28,10 +28,10 @@ with open('listings.csv', 'rU') as f:
     listings.append(row)
 
 for listing in listings[1:]:
-  product = Product(name=unicode(listing[0])[:50])
+  product = Product(name=unicode(listing[0])[:128])
   product.story = unicode(listing[1], errors='replace')
   product.price = int(listing[2])
-  product.publish_date = datetime.datetime.now()
+  product.publish_date = datetime.now()
   product.details = ''
   product.category_id = 1
   product.quantity = listing[3]
