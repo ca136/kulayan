@@ -90,7 +90,9 @@
       $scope.cartData.cartItems = cart.getItems();
       $scope.checkoutData = {
         salesTax: 0,
-        country: "United States"
+        country: {
+          name: "United States"
+        }
       };
       $scope.staticData = {
         countries: COUNTRIES
@@ -175,8 +177,6 @@
       name: "The Netherlands"
     }, {
       name: "United Kingdom"
-    }, {
-      name: "United States"
     }, {
       name: "Afghanistan",
       other: "-----"

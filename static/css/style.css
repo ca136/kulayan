@@ -227,11 +227,6 @@
   /*background:#333;*/
 }
 
-.shopping-cart {
-  margin-right: 10px;
-  vertical-align: middle;
-}
-
 .cart-icon {
   background-image: url('/static/images/cart.png');
   height: 20px;

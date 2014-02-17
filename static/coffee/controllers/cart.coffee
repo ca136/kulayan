@@ -5,7 +5,8 @@ app = angular.module("app")
   $scope.cartData.cartItems = cart.getItems()
   $scope.checkoutData =
     salesTax: 0
-    country: "United States"
+    country:
+      name: "United States"
 
   $scope.staticData = countries: COUNTRIES
   $scope.removeItem = (item) ->
@@ -88,8 +89,8 @@ COUNTRIES = [
 ,
   name: "United Kingdom"
 ,
-  name: "United States"
-,
+#   name: "United States"
+# ,
   name: "Afghanistan"
   other: "-----"
 ,

@@ -125,7 +125,7 @@
             <div class="form-title">Shipping Information</div>
 
 
-            <select name="shipping_country" ng-model="checkoutData.country" ng-options="c.name group by c.other for c in staticData.countries">
+            <select name="shipping_country" ng-model="checkoutData.country" ng-options="c.name group by c.other for c in staticData.countries" value="Choose country">
             </select>
 
             <div class="field-container">
@@ -225,16 +225,15 @@
               Shipping: <span class="total-price">$(( getShipping(cartData.cartItems) ))</span>
             </div>
             <div class="cart-shipping">
-              Tax: $<span ng-bind="checkoutData.salesTax">0</span>
+              Tax: <span class="total-price">$((checkoutData.salesTax))</span>
             </div>
             <div class="cart-total">
               Total: <span class="total-price">$(( getSubTotal(cartData.cartItems) + getShipping(cartData.cartItems) ))</span>
             </div>
             <div class="checkout-button" ng-click="submitPayment(checkoutData)">Submit Payment &#10140;</div>
+            <div ng-click="backToCart()" class="back-to-cart">back to cart</div>
           </div>
         </div>
-
-        <div ng-click="backToCart()" style="margin-top 60px;">BACK TO CART</div>
 
       </div>
     </div>
