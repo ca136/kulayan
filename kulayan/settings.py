@@ -1,4 +1,5 @@
 # Django settings for kulayan project.
+import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -69,8 +70,10 @@ STATIC_ROOT = ''
 STATIC_URL = '/static/'
 
 # Additional locations of static files
+ROOTDIR = os.path.realpath(os.path.dirname(__file__))
+
 STATICFILES_DIRS = (
-  '/Users/caleb/sb/sevenblooms/static/',
+  os.path.join(ROOTDIR,'sevenblooms/static/'),
   # Put strings here, like "/home/html/static" or "C:/www/django/static".
   # Always use forward slashes, even on Windows.
   # Don't forget to use absolute paths, not relative paths.
