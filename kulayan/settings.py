@@ -74,6 +74,7 @@ ROOTDIR = os.path.realpath(os.path.dirname(__file__))
 
 STATICFILES_DIRS = (
   os.path.join(ROOTDIR,'sevenblooms/static/'),
+  os.path.join(ROOTDIR, '../lib/python2.7/site-packages/django/contrib/admin/static'),
   # Put strings here, like "/home/html/static" or "C:/www/django/static".
   # Always use forward slashes, even on Windows.
   # Don't forget to use absolute paths, not relative paths.
@@ -143,7 +144,8 @@ INSTALLED_APPS = (
   'django.contrib.admin',
   'django.contrib.admindocs',
   'south',
-  'website'
+  'website',
+  'gunicorn'
 )
 
 # A sample logging configuration. The only tangible logging
