@@ -1,8 +1,8 @@
 #!/bin/bash
 
-NAME="Kulayan Server"               # Name of the application
-DJANGODIR=/home/web/website/kulayan       	# Django project directory
-SOCKFILE=/home/web/website/run/gunicorn.sock  		# we will communicte using this unix socket
+NAME="Kulayan.com"               # Name of the application
+DJANGODIR=/home/web/prod/kulayan       	# Django project directory
+SOCKFILE=/home/web/prod/run/gunicorn.sock  		# we will communicte using this unix socket
 USER=web                     		# the user to run as
 GROUP=web                    		# the group to run as
 NUM_WORKERS=3                   # how many worker processes should Gunicorn spawn
